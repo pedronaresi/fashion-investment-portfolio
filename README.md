@@ -1,4 +1,4 @@
-# Sportswear Investment Portfolio ![CI status](https://img.shields.io/badge/build-not-passing-brightred.svg)
+# Sportswear Investment Portfolio ![CI status](https://img.shields.io/badge/build-notpassing-brightred.svg)
 Portfolio Investment of sportswear brands assets built in R for "Analysis of Investments and Risks" course of 2018 at the Institute of Science and Technology at Federal University of São Paulo (UNIFESP). ⚽
 
 The description for this task can be found (in Portuguese) [here](LAB-01-Shell-2.pdf).
