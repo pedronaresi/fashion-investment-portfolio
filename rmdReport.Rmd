@@ -1,0 +1,57 @@
+---
+title: "Carteira de Investimento de Estúdios de Cinema"
+output:
+  html_document: default
+  pdf_document: default
+author: "Matheus Anido & Pedro Naresi"
+date: "2018-12-05"
+---
+
+## Introdução
+
+## Estruturação
+### Indústria do Cinema
+
+### Obtenção dos Dados
+Para desenvolvimento do trabalho e obtenção dos dados foram utilizadas as seguintes bibliotecas: 
+```{r, eval=FALSE, message=F, warning=F}
+library(tidyverse)
+library(ggthemes)
+library(gplots)
+library(knitr)
+library(quantmod)
+library(rmarkdown)
+library(shiny)
+```
+
+
+## Análise Fundamentalista
+A Análise fundamentalista é a análise da situação financeira, econômica e mercadológica de uma empresa, um setor ou dado econômico, uma commodity ou uma moeda e suas expectativas e projeções para o futuro.
+
+### Análise dos Dados Individuais
+#### The Walt Disney Company (NYSE: DIS)
+The Walt Disney Company, conhecida simplesmente como Disney, é uma companhia multinacional estadunidense de mídia de massa sediada no Walt Disney Studios, em Burbank, Califórnia. Em dezembro de 2017 após a compra da 21st Century Fox, a empresa se tornou o maior conglomerado de mídia e entretenimento do planeta por receita, passando assim a Comcast.
+
+#### Sony Corporation (NYSE: SNE)
+Sony Corporation é uma empresa multinacional japonesa, sendo o quinto maior conglomerado de mídia do planeta. também atua na indústria do entretenimento sendo proprietária dos estúdios de cinema Columbia Tri-Star Pictures (Sony Pictures) e posteriormente adquiriu a Metro-Goldwyn-Mayer (MGM), porém sem a franquia de Tom e Jerry, pois essa franquia não foi vendida e posteriormente foi afiliada a Warner Bros.
+
+#### Twenty-First Century Fox, Inc. (NasdaqGS: FOX)
+A 21st Century Fox é uma empresa multinacional americana de meios de comunicação em massa sediada em Midtown Manhattan, Cidade de Nova Iorque. É uma das duas empresas que foram formadas a partir da separação dos negócios de editoração da News Corporation em 2013, tal como foi fundada em 1979 por Rupert Murdoch.
+
+#### Comcast Corporation (NasdaqGS: CMCSA)
+A Comcast Corporation é um conglomerado de mídia e entretenimento dos Estados Unidos, fundado no ano de 1963. Em sua lista de aquisições, encontra-se a empresa NBC Universal, a produtora de animações DreamWorks e várias outras empresas.
+
+### Interpretação dos Dados
+### Conclusões sobre a Análise Fundamentalista
+
+## Análise Técnica 
+### Média Móvel
+
+### *Bollinger Bands*
+
+### *Momentum*
+
+### Conclusões sobre a Análise Técnica
+## Formação da Carteira
+### Definição dos pesos da Carteira de Investimento
+### Análise da Carteira de Investimento
