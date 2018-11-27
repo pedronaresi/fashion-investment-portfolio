@@ -22,8 +22,18 @@ library(knitr)
 library(quantmod)
 library(rmarkdown)
 library(shiny)
+library(xts)
+library(ggplot2)
+library(TTS)
 ```
 
+Foram selecionadas quatro grandes empresas do setor de produção cinematográfica para o estudo durante um período de 3 anos. A partir da biblioteca *quantmod* podemos usar a função `getSymbols` e carregar as informações direto do *Yahoo Finance*.
+```{r, eval=FALSE, message=F, warning=F}
+getSymbols("SNE", from="2014-01-01", to="2017-01-01")
+getSymbols("CMCSA", from="2014-01-01", to="2017-01-01")
+getSymbols("FOX", from="2014-01-01", to="2017-01-01")
+getSymbols("DIS", from="2014-01-01", to="2017-01-01")
+```
 
 ## Análise Fundamentalista
 A Análise fundamentalista é a análise da situação financeira, econômica e mercadológica de uma empresa, um setor ou dado econômico, uma commodity ou uma moeda e suas expectativas e projeções para o futuro.

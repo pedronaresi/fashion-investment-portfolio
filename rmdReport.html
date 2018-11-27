@@ -146,7 +146,15 @@ library(gplots)
 library(knitr)
 library(quantmod)
 library(rmarkdown)
-library(shiny)</code></pre>
+library(shiny)
+library(xts)
+library(ggplot2)
+library(TTS)</code></pre>
+<p>Foram selecionadas quatro grandes empresas do setor de produção cinematográfica para o estudo durante um período de 3 anos. A partir da biblioteca <em>quantmod</em> podemos usar a função <code>getSymbols</code> e carregar as informações direto do <em>Yahoo Finance</em>.</p>
+<pre class="r"><code>getSymbols(&quot;SNE&quot;, from=&quot;2014-01-01&quot;, to=&quot;2017-01-01&quot;)
+getSymbols(&quot;CMCSA&quot;, from=&quot;2014-01-01&quot;, to=&quot;2017-01-01&quot;)
+getSymbols(&quot;FOX&quot;, from=&quot;2014-01-01&quot;, to=&quot;2017-01-01&quot;)
+getSymbols(&quot;DIS&quot;, from=&quot;2014-01-01&quot;, to=&quot;2017-01-01&quot;)</code></pre>
 </div>
 </div>
 <div id="analise-fundamentalista" class="section level2">
