@@ -1,28 +1,92 @@
-#incluir bibliotecas
+#instalar pacotes
+#install.packages(c("xts","quantmod","ggplot2","TTR","knitr","tidyquant","gridExtra"))
+#Ativar os pacotes
 library(xts)
 library(quantmod)
 library(ggplot2)
-library(TTS)
+library(TTR)
 library(knitr)
+library(tidyquant)
+library(gridExtra)
 #carregar dados
 getSymbols("SNE", from="2014-01-01", to="2017-01-01")
-getSymbols("UVV", from="2014-01-01", to="2017-01-01")
+getSymbols("CMCSA", from="2014-01-01", to="2017-01-01")
 getSymbols("FOX", from="2014-01-01", to="2017-01-01")
 getSymbols("DIS", from="2014-01-01", to="2017-01-01")
-#etapa 3
-bbands.SNE<-BBands(SNE[,c("SNE.High","SNE.Low","SNE.Close")], sd = 2, n = 20)
-bbands.UVV<-BBands(UVV[,c("UVV.High","UVV.Low","UVV.Close")], sd = 2, n = 20)
-bbands.FOX<-BBands(FOX[,c("FOX.High","FOX.Low","FOX.Close")], sd = 2, n = 20)
-bbands.DIS<-BBands(DIS[,c("DIS.High","DIS.Low","DIS.Close")], sd = 2, n = 20)
 
-bbands.SNEAdjusted <- BBands(SNE[,"SNE.Adjusted"], sd = 2, n = 20)
-bbands.UVVAdjusted <- BBands(UVV[,"UVV.Adjusted"], sd = 2, n = 20)
-bbands.FOXAdjusted <- BBands(FOX[,"FOX.Adjusted"], sd = 2, n = 20)
-bbands.DISAdjusted <- BBands(DIS[,"DIS.Adjusted"], sd = 2, n = 20)
+#usar o TTR para calcular a banda inferior, superior, media movel e %B
+bbands.SNE <- BBands(SNE[,"SNE.Adjusted"], sd = 2, n = 20)
+bbands.CMCSA <- BBands(CMCSA[,"CMCSA.Adjusted"], sd = 2, n = 20)
+bbands.FOX <- BBands(FOX[,"FOX.Adjusted"], sd = 2, n = 20)
+bbands.DIS <- BBands(DIS[,"DIS.Adjusted"], sd = 2, n = 20)
 
-bbands.DIS<-cbind(index(bbands.DIS),data.frame(bbands.DIS))
-rownames(bbands.DIS)<-seq(1,nrow(bbands.DIS),1)
-names(bbands.DIS)<-paste(c("date", "dn", "mavg", "up", "pctB"))
-bbands.DIS<-bbands.DIS[-c(1:20),]
+#tratamos os dados para inserir a coluna contendo as datas e retiramos as primeiras vinte linhas
+#jÃ¡ que usamos um periodo de 20 dias para a media movel
+bbands.DIS <- cbind(index(bbands.DIS), data.frame(bbands.DIS))
+rownames(bbands.DIS) <- seq(1, nrow(bbands.DIS), 1)
+names(bbands.DIS) <- paste(c("date", "dn", "mavg", "up", "pctB"))
+bbands.DIS <- bbands.DIS[-c(1:20),]
 
-ggplot(data = bbands.DIS, aes(x = date, y = mavg)) + geom_line(color = "red") + geom_line(mapping = aes(x = date, y = up)) + geom_line(mapping = aes(x = date, y = dn))
+bbands.SNE <- cbind(index(bbands.SNE), data.frame(bbands.SNE))
+rownames(bbands.SNE) <- seq(1, nrow(bbands.SNE), 1)
+names(bbands.SNE) <- paste(c("date", "dn", "mavg", "up", "pctB"))
+bbands.SNE <- bbands.SNE[-c(1:20),]
+
+bbands.CMCSA <- cbind(index(bbands.CMCSA), data.frame(bbands.CMCSA))
+rownames(bbands.CMCSA) <- seq(1, nrow(bbands.CMCSA), 1)
+names(bbands.CMCSA) <- paste(c("date", "dn", "mavg", "up", "pctB"))
+bbands.CMCSA <- bbands.CMCSA[-c(1:20),]
+
+bbands.FOX <- cbind(index(bbands.FOX), data.frame(bbands.FOX))
+rownames(bbands.FOX) <- seq(1, nrow(bbands.FOX), 1)
+names(bbands.FOX) <- paste(c("date", "dn", "mavg", "up", "pctB"))
+bbands.FOX <- bbands.FOX[-c(1:20),]
+
+#plotar o Bollinger Bands usando GGPlot2 e TidyQuant
+#DIS
+plotDIS <- ggplot(data = bbands.DIS, aes(date, mavg)) + geom_line() #plotar a media movel
+plotDIS <- plotDIS + geom_line(mapping = aes(date, up), colour = "gray") #adicionar camada da banda superior
+plotDIS <- plotDIS + geom_line(mapping = aes(date, dn), colour = "gray") #adicionar camada da banda inferioi
+plotDIS <- plotDIS + labs(title = "Bollinger Bands Disney", x = NULL, y = "Valor da Ação")
+plotDIS <- plotDIS + theme(axis.title.x=element_blank(), axis.text.x=element_blank(), axis.ticks.x=element_blank(),plot.margin=unit(c(0.5,0.4,0,0.5), "cm"))
+plotDIS2 <- ggplot(data = bbands.DIS, aes(date, pctB)) + geom_line()
+plotDIS2 <- plotDIS2 + geom_hline(yintercept = 0:1, colour = "gray", linetype = 2,size = 0.5)
+plotDIS2 <- plotDIS2 + labs(x = "Ano", y = "%B")
+plotDIS2 <- plotDIS2 + theme(plot.margin=unit(c(0,0.4,0.5,0.6), "cm"))
+grid.arrange(plotDIS,plotDIS2, nrow = 2, heights=c(2/3, 1/3))
+
+#FOX
+plotDIS <- ggplot(data = bbands.FOX, aes(date, mavg)) + geom_line() #plotar a media movel
+plotDIS <- plotDIS + geom_line(mapping = aes(date, up), colour = "gray") #adicionar camada da banda superior
+plotDIS <- plotDIS + geom_line(mapping = aes(date, dn), colour = "gray") #adicionar camada da banda inferioi
+plotDIS <- plotDIS + labs(title = "Bollinger Bands FOX", x = NULL, y = "Valor da Ação")
+plotDIS <- plotDIS + theme(axis.title.x=element_blank(), axis.text.x=element_blank(), axis.ticks.x=element_blank(),plot.margin=unit(c(0.5,0.5,0,0.5), "cm"))
+plotDIS2 <- ggplot(data = bbands.FOX, aes(date, pctB)) + geom_line()
+plotDIS2 <- plotDIS2 + geom_hline(yintercept = 0:1, colour = "gray", linetype = 2,size = 0.5)
+plotDIS2 <- plotDIS2 + labs(x = "Ano", y = "%B")
+plotDIS2 <- plotDIS2 + theme(plot.margin=unit(c(0,0.5,0.5,0.2), "cm"))
+grid.arrange(plotDIS,plotDIS2, nrow = 2, heights=c(2/3, 1/3))
+
+#SNE
+plotDIS <- ggplot(data = bbands.SNE, aes(date, mavg)) + geom_line() #plotar a media movel
+plotDIS <- plotDIS + geom_line(mapping = aes(date, up), colour = "gray") #adicionar camada da banda superior
+plotDIS <- plotDIS + geom_line(mapping = aes(date, dn), colour = "gray") #adicionar camada da banda inferioi
+plotDIS <- plotDIS + labs(title = "Bollinger Bands Sony", x = NULL, y = "Valor da Ação")
+plotDIS <- plotDIS + theme(axis.title.x=element_blank(), axis.text.x=element_blank(), axis.ticks.x=element_blank(),plot.margin=unit(c(0.5,0.4,0,0.5), "cm"))
+plotDIS2 <- ggplot(data = bbands.SNE, aes(date, pctB)) + geom_line()
+plotDIS2 <- plotDIS2 + geom_hline(yintercept = 0:1, colour = "gray", linetype = 2,size = 0.5)
+plotDIS2 <- plotDIS2 + labs(x = "Ano", y = "%B")
+plotDIS2 <- plotDIS2 + theme(plot.margin=unit(c(0,0.4,0.5,0.4), "cm"))
+grid.arrange(plotDIS,plotDIS2, nrow = 2, heights=c(2/3, 1/3))
+
+#CMCSA
+plotDIS <- ggplot(data = bbands.CMCSA, aes(date, mavg)) + geom_line() #plotar a media movel
+plotDIS <- plotDIS + geom_line(mapping = aes(date, up), colour = "gray") #adicionar camada da banda superior
+plotDIS <- plotDIS + geom_line(mapping = aes(date, dn), colour = "gray") #adicionar camada da banda inferioi
+plotDIS <- plotDIS + labs(title = "Bollinger Bands Sony", x = NULL, y = "Valor da Ação")
+plotDIS <- plotDIS + theme(axis.title.x=element_blank(), axis.text.x=element_blank(), axis.ticks.x=element_blank(),plot.margin=unit(c(0.5,0.4,0,0.5), "cm"))
+plotDIS2 <- ggplot(data = bbands.CMCSA, aes(date, pctB)) + geom_line()
+plotDIS2 <- plotDIS2 + geom_hline(yintercept = 0:1, colour = "gray", linetype = 2,size = 0.5)
+plotDIS2 <- plotDIS2 + labs(x = "Ano", y = "%B")
+plotDIS2 <- plotDIS2 + theme(plot.margin=unit(c(0,0.4,0.5,0.4), "cm"))
+grid.arrange(plotDIS,plotDIS2, nrow = 2, heights=c(2/3, 1/3))
