@@ -17,7 +17,7 @@ Os números, além de incríveis ao olhos dos leigos, é ainda mais incrível ao
 
 ### Obtenção dos Dados
 Para desenvolvimento do trabalho e obtenção dos dados foram utilizadas as seguintes bibliotecas: 
-```{r, eval=FALSE, message=F, warning=F}
+```{r, eval=TRUE, message=F, warning=F}
 library(tidyverse)
 library(ggthemes)
 library(gplots)
@@ -27,11 +27,13 @@ library(rmarkdown)
 library(shiny)
 library(xts)
 library(ggplot2)
-library(TTS)
+library(TTR)
+library(tidyquant)
+library(gridExtra)
 ```
 
 Foram selecionadas quatro grandes empresas do setor de produção cinematográfica para o estudo durante um período de 3 anos. A partir da biblioteca *quantmod* podemos usar a função `getSymbols` e carregar as informações direto do *Yahoo Finance*.
-```{r, eval=FALSE, message=F, warning=F}
+```{r, eval=TRUE, message=F, warning=F}
 getSymbols("SNE", from="2014-01-01", to="2017-01-01")
 getSymbols("CMCSA", from="2014-01-01", to="2017-01-01")
 getSymbols("FOX", from="2014-01-01", to="2017-01-01")
@@ -145,6 +147,25 @@ Depois de todas as análises fundamentalistas chegamos a conclusão que as duas 
 ### Média Móvel
 
 ### *Bollinger Bands*
+```{r, eval=TRUE, include = FALSE}
+bbands.DIS <- BBands(DIS[,"DIS.Adjusted"],sd = 2, n = 20)
+bbands.DIS <- cbind(index(bbands.DIS), data.frame(bbands.DIS), data.frame(DIS[,-c(5,6)]))
+rownames(bbands.DIS) <- seq(1, nrow(bbands.DIS), 1)
+names(bbands.DIS) <- paste(c("date", "dn", "mavg", "up", "pctB", "open","high","low","close"))
+```
+```{r, eval=TRUE, warning = F}
+plotDIS <- ggplot(data = bbands.DIS, aes(x = date, y = close, open = open, close = close, low = low, high = high)) + geom_candlestick()
+plotDIS <- plotDIS + geom_bbands(ma_fun = EMA, sd = 2, n = 20, linetype = 2, size = 0.5, alpha = 0.2, fill = palette_light()[[1]], color_bands = palette_light()[[1]], color_ma = palette_light()[[2]])
+plotDIS <- plotDIS + labs(title = "Bollinger Bands Disney", x = NULL, y = "Valor da Ação")
+plotDIS <- plotDIS + theme_tq() + theme(axis.title.x=element_blank(), axis.text.x=element_blank(), axis.ticks.x=element_blank(),plot.margin=unit(c(0.5,0.4,0,0.5), "cm"))
+plotDIS <- plotDIS + scale_y_continuous()
+plotDIS2 <- ggplot(data = bbands.DIS, aes(date, pctB)) + geom_line(colour = palette_light()[[1]])
+plotDIS2 <- plotDIS2 + geom_hline(yintercept = 0:1, colour = "gray", linetype = 2,size = 0.5)
+plotDIS2 <- plotDIS2 + labs(x = "Ano", y = "%B")
+plotDIS2 <- plotDIS2 + theme_tq()+ theme(plot.margin=unit(c(-0.1,0.4,0.5,0.6), "cm"))
+grid.arrange(plotDIS,plotDIS2, nrow = 2, heights=c(2/3, 1/3))
+```
+
 
 ### *Momentum*
 
