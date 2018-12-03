@@ -33,7 +33,7 @@ library(gridExtra)
 ```
 
 Foram selecionadas quatro grandes empresas do setor de produção cinematográfica para o estudo durante um período de 3 anos. A partir da biblioteca *quantmod* podemos usar a função `getSymbols` e carregar as informações direto do *Yahoo Finance*.
-```{r, eval=TRUE, message=F, warning=F}
+```{r, eval=TRUE, include=FALSE, message=F, warning=F}
 getSymbols("SNE", from="2014-01-01", to="2017-01-01")
 getSymbols("CMCSA", from="2014-01-01", to="2017-01-01")
 getSymbols("FOX", from="2014-01-01", to="2017-01-01")
@@ -144,7 +144,6 @@ CMCSA | 2,03% | $39,01
 Depois de todas as análises fundamentalistas chegamos a conclusão que as duas ações que mais se destacam no segmento são a DIS e CMCSA. Os bons valores nos indicadores refletem a atuação da DIS na produção de conteúdo de entretenimento como os filmes da franquia Marvel e Star Wars (que são fenômenos de bilheteria e de venda de produtos) e da produção de séries de TV nos EUA pela CMCSA, cujo estúdio é responsável por grande parte do conteúdo cabeado e aberto. Logo em seguida, temos a FOX com valores não tão animadores quanto as duas maiores (provavelmente devido aos cortes e o enfraquecimento do estúdio devido ao quase monopólio da DIS na produção de filmes blockbusters). Por último, a SNE, com valores ainda menores, devido ao mesmo motivo de enfraquecimento da FOX.
 
 ## Análise Técnica 
-### Média Móvel
 
 ### *Bollinger Bands*
 ```{r, eval=TRUE, include = FALSE}
