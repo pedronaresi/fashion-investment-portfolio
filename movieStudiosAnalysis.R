@@ -70,7 +70,7 @@ names(bbands.MSFT) <- paste(c("date", "dn", "mavg", "up", "pctB", "open","high",
 bbands.MSFT <- bbands.MSFT[-c(1:20),]
 
 #media movel
-MSFT.mm <- ggplot(data = bbands.MSFT, aes(x = date, y = close)) + geom_candlestick(aes(x = date, open = open, high = high,low = low,close = close), color_up = "gray30", color_down = "gray30", fill_up = "green3", fill_down = "red") + theme_tq()
+MSFT.mm <- ggplot(data = bbands.MSFT, aes(x = date, y = close)) + geom_line() + theme_tq()
 MSFT.mm <- MSFT.mm + geom_ma(ma_fun = SMA, n  = 50, na.rm = T, linetype = 1, colour = "Turquoise 1")
 MSFT.mm <- MSFT.mm + geom_ma(ma_fun = SMA, n = 200, na.rm = T, linetype = 1, colour = "darkorchid1")
 MSFT.mm + labs(title = "Média Móvel MSFT", x = "Ano", y = "Valor da Ação")
@@ -87,3 +87,14 @@ MSFT.pctB <- ggplot(data = bbands.MSFT, aes(date, pctB)) + geom_line(colour ="da
 MSFT.pctB <- MSFT.pctB + labs(x = "Ano", y = "%B")
 MSFT.pctB <- MSFT.pctB + theme_tq()
 grid.arrange(MSFT.bband,MSFT.pctB, nrow = 2, heights=c(2/3, 1/3))
+
+
+#momentum
+momentum.FOX <- RSI(FOX$FOX.Close, n = 14)
+momentum.FOX <- cbind(index(momentum.FOX), data.frame(momentum.FOX))
+rownames(bbands.FOX) <- seq(1, nrow(bbands.FOX), 1)
+momentum.FOX <- momentum.FOX[-c(1:14),]
+names(momentum.FOX) <- paste(c("date","Momentum"))
+
+FOX.momentum <- ggplot(data = momentum.FOX, aes (x = date, y = Momentum)) + geom_line() + theme_tq() + ylim(0, 100)
+FOX.momentum + labs(title = "Momentum FOX",x = "Ano", y = "Momentum") 
