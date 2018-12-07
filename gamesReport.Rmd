@@ -23,14 +23,16 @@ library(gridExtra)
 ```
 
 ##Etapa 1: Estruturação (2.0 pontos)
-
-###Passo 1: identificar o setor da economia (ex. aviação, tecnologia, automoveis, bancos etc.) (0.5 pontos)
+###Passo 1: Identificar o setor da economia (ex. aviação, tecnologia, automoveis, bancos etc.) (0.5 pontos)
 Estúdios de Games
 
 ###Passo 2: Fazer um recorte do tempo (ex. 3 anos) (0.5 pontos)
+Para todas as empresas o recorte do tempo será feito considerando os dados desde 1 de Janeiro de 2014 até 01 de Janeiro de 2017.
 
 ###Passo 3: Iniciar uma breve descrição do setor (contexto) (0.5 pontos)
+Há vários anos que os jogos eletrônicos deixaram de ser brincadeira de criança e isso tem sido comprovado com os altos valores que são movimentados todos os anos pelo seu mercado. Segundo levantamento feito pelo banco de investimentos de produtos digitais Digi-Capital, a indústria de games deve faturar mais de U$ 100 bilhões até o ano de 2017, algo inimaginável a pouco tempo atrás.
 
+Esse grande crescimento pode ser comprovado ao se comparar com a gigante indústria cinematográfica de Hollywood. Desde 2007, o mercado de games tem tido um faturamento maior que o  cinema. Em 2013, foram U$ 52 bilhões contra U$ 50 bilhões. Além disso, em 2013 foi o jogo Grand Theft Auto V quebrou o recorde de lucro de todos os seguimentos, obtendo um ganho de U$ 1 bilhão em apenas três dias após o seu lançamento. [1]
 
 ###Passo 4: Obtenção dos dados (dados das empresas selecionadas) (0.5 pontos)
 Foram selecionadas quatro grandes empresas do setor de produção cinematográfica para o estudo durante um período de 3 anos. A partir da biblioteca *quantmod* podemos usar a função `getSymbols` e carregar as informações direto do *Yahoo Finance*.
@@ -41,10 +43,10 @@ getSymbols("ATVI", from="2014-01-01", to="2017-01-01")
 getSymbols("MSFT", from="2014-01-01", to="2017-01-01")
 ```
 
-##Etapa 2 - Analise Fundamentalista (2.5 pontos)
-###Passo 5: analise dos dados individuais (ex. BA, ERJ...) (1.0 ponto)
+##Etapa 2 - Análise Fundamentalista (2.5 pontos)
+###Passo 5: Análise dos dados individuais (ex. BA, ERJ...) (1.0 ponto)
 #### TTake-Two Interactive Software, Inc. (NASDAQ: TTWO)
-Take-Two Interactive Software, Inc. (estilizada como Take-Two ou Take2) é uma multinacional americana publicadora, desenvolvedora e distribuidora de videogames e periféricos de videogame. A Take-Two é a proprietária integral da Rockstar Games e 2K Games. A sede da empresa está em Nova Iorque, com sede internacional em Windsor, Reino Unido. Locais de estúdio de desenvolvimento incluem San Diego, Vancouver, Toronto e Novato, Califórnia. A Take-Two tem publicado muitos jogos notáveis, incluindo a sua mais famosa série Grand Theft Auto, também as séries Carnival Games, Midnight Club, Manhunt e mais recentemente, BioShock. Como proprietária da 2K Games, publica os títulos populares da 2K Sports. Ela também atuou como editora do jogo de 2006 The Elder Scrolls IV: Oblivion, da Bethesda Softworks.
+Take-Two Interactive Software, Inc. (estilizada como Take-Two ou Take2) é uma multinacional americana publicadora, desenvolvedora e distribuidora de videogames e periféricos de videogame. A Take-Two é a proprietária integral da Rockstar Games e 2K Games. A sede da empresa está em Nova Iorque, com sede internacional em Windsor, Reino Unido. Locais de estúdio de desenvolvimento incluem San Diego, Vancouver, Toronto e Novato, Califórnia. A Take-Two tem publicado muitos jogos notáveis, incluindo a sua mais famosa série Grand Theft Auto, também as séries Carnival Games, Midnight Club, Manhunt e mais recentemente, BioShock. Como proprietária da 2K Games, publica os títulos populares da 2K Sports. Ela também atuou como editora do jogo de 2006 The Elder Scrolls IV: Oblivion, da Bethesda Softworks. [2]
 
 **Indicador** | **Valor**
 ------------- | -------------
@@ -54,10 +56,10 @@ Patrimônio Líquido Total | $1.488.970.000,00
 Lucro pro Ação Diluído (ttm) | 1,83
 Retorno Sobre o Patrimônio Líquido (ttm) | 12,47%
 Rendimento Anual de Dividendos Futuros | N/A
-FALTA ESSE Número de Ações |  `r 2 + 2`
+Número de Ações |  116.004.605
 
 #### Electronic Arts Inc. (NASDAQ: EA)
-A Electronic Arts Inc., comumente chamada de EA, é uma empresa desenvolvedora e distribuidora de jogos eletrônicos, situada em Redwood City, estado da Califórnia, nos Estados Unidos. Foi fundada em 28 de maio de 1982 por Trip Hawkins, período em que foi pioneira no mercado de jogos para computadores domésticos. Em 2011, a Electronic Arts era a terceira maior empresa do setor, por faturamento, atrás da Nintendo e da Activision Blizzard.
+A Electronic Arts Inc., comumente chamada de EA, é uma empresa desenvolvedora e distribuidora de jogos eletrônicos, situada em Redwood City, estado da Califórnia, nos Estados Unidos. Foi fundada em 28 de maio de 1982 por Trip Hawkins, período em que foi pioneira no mercado de jogos para computadores domésticos. Em 2011, a Electronic Arts era a terceira maior empresa do setor, por faturamento, atrás da Nintendo e da Activision Blizzard. [3]
 
 **Indicador** | **Valor**
 ------------- | -------------
@@ -67,10 +69,10 @@ Patrimônio Líquido Total | $4.595.000.000,70
 Lucro pro Ação Diluído (ttm) | 3,12
 Retorno Sobre o Patrimônio Líquido (ttm) | 19,97%
 Rendimento Anual de Dividendos Futuros | N/A
-FALTA ESSE Número de Ações |  `r 2 + 2`
+Número de Ações |  303.909.810
 
 #### Activision Blizzard, Inc. (NASDAQ: ATVI)
-Activision Blizzard, Inc. é uma empresa de jogos eletrônicos, resultado da fusão de duas desenvolvedoras e distribuidoras americanas de jogos eletrônicos Activision e Blizzard Entertainment. A fusão aconteceu no dia 9 de julho de 2008. É considerada como uma das maiores desenvolvedoras de jogos interativos do mundo.
+Activision Blizzard, Inc. é uma empresa de jogos eletrônicos, resultado da fusão de duas desenvolvedoras e distribuidoras americanas de jogos eletrônicos Activision e Blizzard Entertainment. A fusão aconteceu no dia 9 de julho de 2008. É considerada como uma das maiores desenvolvedoras de jogos interativos do mundo. [4]
 
 **Indicador** | **Valor**
 ------------- | -------------
@@ -80,10 +82,10 @@ Patrimônio Líquido Total | $9.462.000.000,00
 Lucro pro Ação Diluído (ttm) | 0,76
 Retorno Sobre o Patrimônio Líquido (ttm) | 5,59%
 Rendimento Anual de Dividendos Futuros | 0,68%
-FALTA ESSE Número de Ações |  `r 2 + 2`
+Número de Ações |  765.576.161
 
 #### Microsoft Corporation (NASDAQ: MSFT)
-Washington, que desenvolve, fabrica, licencia, apoia e vende softwares de computador, produtos eletrônicos, computadores e serviços pessoais. Entre seus produtos de software mais conhecidos estão as linhas de sistemas operacionais Windows, a linha de aplicativos para escritório Office e o navegador Internet Explorer. Entre seus principais produtos de hardware estão os consoles de videogame Xbox, a série de tablets Surface e os Smartphones Microsoft Lumia, antiga Nokia.
+Washington, que desenvolve, fabrica, licencia, apoia e vende softwares de computador, produtos eletrônicos, computadores e serviços pessoais. Entre seus produtos de software mais conhecidos estão as linhas de sistemas operacionais Windows, a linha de aplicativos para escritório Office e o navegador Internet Explorer. Entre seus principais produtos de hardware estão os consoles de videogame Xbox, a série de tablets Surface e os Smartphones Microsoft Lumia, antiga Nokia. [5]
 
 **Indicador** | **Valor**
 ------------- | -------------
@@ -93,56 +95,55 @@ Patrimônio Líquido Total | $82.718.000.000,00
 Lucro pro Ação Diluído (ttm) | 2,43
 Retorno Sobre o Patrimônio Líquido (ttm) | 21,43%
 Rendimento Anual de Dividendos Futuros | 1,79%
-FALTA ESSE Número de Ações |  `r 2 + 2`
+FALTA ESSE Número de Ações |  7.888.658.823
 
-###Passo 6: analise fundamentalista (apresentação e interpretação) (1.0 ponto)
+###Passo 6: Análise Fundamentalista (apresentação e interpretação) (1.0 ponto)
 Como uma análise fundamentalista completa é composta por inúmeros indicadores e se torna muitas vezes muito complexa, foram escolhidos apenas alguns indicadores para assim realizar a comparação com as outras companhias escolhidas.
 
 #### P/VP
-O indicador a ser verificado é a divisão entre a Capitalização de Mercado e o Patrimônio Líquido Total, que informa quanto o mercado está disposto a pagar sobre o Patrimônio Líquido da empresa (quanto o valor mais próximo de 1, melhor). Podemos certificar que mesmo com a consolidação da DIS a CMCSA é mais recomendada ao investimento.
+O indicador a ser verificado é a divisão entre a Capitalização de Mercado e o Patrimônio Líquido Total, que informa quanto o mercado está disposto a pagar sobre o Patrimônio Líquido da empresa (quanto o valor mais próximo de 1, melhor). Podemos certificar que a ATVI possui o valor mais proximo de 1, em seguida a EA.
 
 **Ação** | **P/VP**
 --- | ---
-TTWO | 3,55
-EA | 
-ATVI | 4,69	
-MSFT | 2,61
+TTWO | 8,11
+EA |  5,51
+ATVI | 3,88
+MSFT | 10,13
 
 #### LPA
-O indicador a ser verificado agora, Lucro por Ação Diluído, é Lucro Líquido nos últimos doze meses dividido pelo número de ações disponíveis no mercado. Podemos assim, certificar o quão lucrativa uma única ação foi nos últimos doze meses. Quanto maior esse valor, mais lucrativa ela é. Ao analisar a tabela podemos ver que a DIS eé disparada a que mais lucra no segmento, se tornando a preferidada ao analisarmos o indicador de LPA.
+O indicador a ser verificado agora, Lucro por Ação Diluído, é Lucro Líquido nos últimos doze meses dividido pelo número de ações disponíveis no mercado. Podemos assim, certificar o quão lucrativa uma única ação foi nos últimos doze meses. Quanto maior esse valor, mais lucrativa ela é. Embora a ATVI tenha o melhor VPA ao analisar a tabela podemos ver que a EA é disparada a que mais lucra no segmento, se tornando a preferidada ao analisarmos o indicador de LPA.
 
 **Ação** | **LPA**
 --- | ---
-TTWO | 3,55
-EA | 
-ATVI | 4,69	
-MSFT | 2,61
+TTWO | 1,83
+EA | 3,12
+ATVI | 	0,76
+MSFT | 2,43
 
 #### ROE
-O indicador a ser verificado agora, Retorno sobre o Patrimônio Líquido, é Lucro Líquido nos últimos doze meses dividido pelo Patrimônio Líquido nos últimos doze meses. Em outras palavras, o ROE é a capacidade de um empresa de gerar lucro sobre o próprio patrimônio líquido dela. Ao compararmos as empresas selecionadas podemos verificar que embora a DIS tenha um valor de mercado maior, e lucro maiores, a CMCSA a consegue ultrapassar com 11% a mais de retorno sobre o patrimônio, o se tornando assim um ótimo custo benefício para investimento. Ate a FOX, que nos outros indicadores se mostrou menos eficiente que a DIS, ultrapassou o ROE gigante do Mickey.
+O indicador a ser verificado agora, Retorno sobre o Patrimônio Líquido, é Lucro Líquido nos últimos doze meses dividido pelo Patrimônio Líquido nos últimos doze meses. Em outras palavras, o ROE é a capacidade de um empresa de gerar lucro sobre o próprio patrimônio líquido dela. Ao compararmos as empresas selecionadas podemos verificar que embora a MSFT tenha um valor de mercado maior, e lucro maiores, a EA a consegue uma porcentagem bem próxima (19,97%) de retorno sobre o patrimônio, o se tornando assim um ótimo custo benefício para investimento. Já a ATVI que nos outros indicadores se saiu muito bem, foi a "lanterna" no ROE, se mostrando pouco lucrativa a partir do seu dinheiro no caixa.
 
 **Ação** | **ROE**
 --- | ---
-TTWO | 3,55
-EA | 
-ATVI | 4,69	
-MSFT | 2,61
+TTWO | 12,47%
+EA | 19,97%
+ATVI | 5,59%	
+MSFT | 21,43%
 
 #### Div. Yield
-Outro indicador interessante a ser verificado é o Rendimento Anual de Dividendos Futuros, que é o quanto uma empresa paga em dividendos em relação ao preço de suas ações a cada ano. O que buscamos aqui são empresas que pagam um dividendo alto e tem um valor de ação não tão alto. Entretanto, DY elevados são, frequentemente, indicadores de baixas perspectivas de crescimento. Um DY muito elevado pode ser um alerta de que a empresa está enfrentando dificuldades financeiras e que o mercado espera que isso seja acompanhado por cortes nos dividendos futuros. Se atentando ao dados, verificamos que a quem mais paga dividendo é a CMCSA e com um preço de ação muito menor que a gigante DIS.
+Outro indicador interessante a ser verificado é o Rendimento Anual de Dividendos Futuros, que é o quanto uma empresa paga em dividendos em relação ao preço de suas ações a cada ano. O que buscamos aqui são empresas que pagam um dividendo alto e tem um valor de ação não tão alto. Entretanto, DY elevados são, frequentemente, indicadores de baixas perspectivas de crescimento. Um DY muito elevado pode ser um alerta de que a empresa está enfrentando dificuldades financeiras e que o mercado espera que isso seja acompanhado por cortes nos dividendos futuros. A TTWO e a EA não informam os valores de Div. Yield em seus números no Yahoo Finance, sobrando apenas a ATVI e a MSFT para comparação. Se atentando ao dados, verificamos que a quem mais paga dividendo é a MSFT. Embora seu preço de ação seja maior que o da ATVI, a porcentagem de rendimento é maior que duas ações da ATVI, justificando a escolha da gigante do Xbox nesse indicador.
 
 **Ação** | **Div. Yield** | **Valor da Ação**
 --- | --- | ---
-TTWO | 3,55 |
-EA |  |
-ATVI | 4,69	|
-MSFT | 2,61 |
+TTWO | NA | $103,06
+EA | NA | $83,04
+ATVI | 0,68%	| $47,90
+MSFT | 1,79% | $106,25
 
 ###Passo 7: Principais conclusões da analise fundamentalista (0.5 pontos)
-Depois de todas as análises fundamentalistas chegamos a conclusão que as duas ações que mais se destacam no segmento são a DIS e CMCSA. Os bons valores nos indicadores refletem a atuação da DIS na produção de conteúdo de entretenimento como os filmes da franquia Marvel e Star Wars (que são fenômenos de bilheteria e de venda de produtos) e da produção de séries de TV nos EUA pela CMCSA, cujo estúdio é responsável por grande parte do conteúdo cabeado e aberto. Logo em seguida, temos a FOX com valores não tão animadores quanto as duas maiores (provavelmente devido aos cortes e o enfraquecimento do estúdio devido ao quase monopólio da DIS na produção de filmes blockbusters). Por último, a SNE, com valores ainda menores, devido ao mesmo motivo de enfraquecimento da FOX.
+Depois de todas as análises fundamentalistas chegamos a conclusão que as duas ações que mais se destacam no segmento são a EA e MSFT. Os bons valores nos indicadores refletem a atuação da EA na produção de franquia de jogos muito populares entre o público softcore e hardcore. A mesma é responsável pela maior parte dos jogos esportivos (FIFA, NBA, NFL, MLB, NHL), a tornando assim uma empresa muito popular no mainstream. Os bons números da Microsoft são certificados devido a sua tradição no mercado da tecnologia. Embora o Xbox One seja o console mais vendido da geração atual, a mesma se mostra eficiente e consistente em seus números. Logo em seguida, temos a ATVI com valores similares a TTWO, ambas produtoras de games de sucesso, como Call of Duty e Grand Theft Auto, não são tão animadores quanto as duas maiores (devido aos motivos de destaque de EA e MSFT), mas ainda sim bons investimentos.
 
 ##Etapa 3 - Análise Técnica (2.5 pontos)
-
 ###Passo 8: Utilizar as medidas estudadas: MediaMovel, Bollinger Bands, Momentum. (1.5 pontos)
 #### *Bollinger Bands*
 ```{r, eval=TRUE}
@@ -163,6 +164,8 @@ TTWO.pctB <- TTWO.pctB + theme_tq()
 grid.arrange(TTWO.bband,TTWO.pctB, nrow = 2, heights=c(2/3, 1/3))
 ```
 
+Ao analisar o gráfico de Bollinger Bands da TTWO podemos verificar apenas um momento onde a ação entrou em oversold significativo (vela ultrapassa a banda inferior), que foi no 3º bimestre de 2015 e um momento em que o ativo entrou em overbought significativo (4º bimestre de 2015). A TTWO possui uma volatilidade extremamente baixa durante todo o período avaliado. A empresa começou o ano de 2014 com um crescimento muito bom,  se manteve em crescimento constante. Embora algumas quedas e variações durante o caminho, o preço ao fechar o ano de 2016 foi maior que duas vezes o preço da ação no iniciar de 2014. 
+
 ```{r, eval=TRUE}
 bbands.EA <- BBands(EA[,6], sd = 2, n = 20)
 bbands.EA <- cbind(index(bbands.EA), data.frame(bbands.EA), data.frame(EA[,-5]))
@@ -180,6 +183,8 @@ EA.pctB <- EA.pctB + labs(x = "Ano", y = "%B")
 EA.pctB <- EA.pctB + theme_tq()
 grid.arrange(EA.bband,EA.pctB, nrow = 2, heights=c(2/3, 1/3))
 ```
+
+Ao analisar o gráfico de Bollinger Bands da EA podemos verificar apenas um momento onde a ação entrou em oversold significativo (vela ultrapassa a banda inferior), que foi no 3º bimestre de 2015 e nenhum momento onde o ativo entrou em overbought significativo. A EA possui uma volatilidade extremamente baixa durante todo o período avaliado, mas em dois momentos de 2016 ele se tornou um pouco maior. A empresa começou o ano de 2014 com um crescimento muito bom, e se manteve em crescimento constante. Embora algumas quedas e variações durante o caminho, o preço ao fechar o ano de 2016 foi maior que quatro vezes o preço da ação no iniciar de 2014. 
 
 ```{r, eval=TRUE}
 bbands.ATVI <- BBands(ATVI[,6], sd = 2, n = 20)
@@ -199,6 +204,8 @@ ATVI.pctB <- ATVI.pctB + theme_tq()
 grid.arrange(ATVI.bband,ATVI.pctB, nrow = 2, heights=c(2/3, 1/3))
 ```
 
+Ao analisar o gráfico de Bollinger Bands da ATVI podemos verificar que em nenhum momento onde a ação entrou em oversold ou overbought significativo (vela ultrapassa a banda inferior ou superior). A ATVI possui uma volatilidade extremamente baixa durante todo o período avaliado, mas no 1º bimestre de 2016 ouve um variação das bandas um pouco maior. A empresa começou o ano de 2014 com um crescimento muito bom, e se manteve em crescimento constante. Embora algumas quedas e variações durante o caminho, o preço ao fechar o ano de 2016 foi maior que duas vezes o preço da ação no iniciar de 2014. 
+
 ```{r, eval=TRUE}
 bbands.MSFT <- BBands(MSFT[,6], sd = 2, n = 20)
 bbands.MSFT <- cbind(index(bbands.MSFT), data.frame(bbands.MSFT), data.frame(MSFT[,-5]))
@@ -216,6 +223,9 @@ MSFT.pctB <- MSFT.pctB + labs(x = "Ano", y = "%B")
 MSFT.pctB <- MSFT.pctB + theme_tq()
 grid.arrange(MSFT.bband,MSFT.pctB, nrow = 2, heights=c(2/3, 1/3))
 ```
+
+Ao analisar o gráfico de Bollinger Bands da MSFT podemos verificar que em nenhum momento onde a ação entrou em oversold ou overbought significativo (vela ultrapassa a banda inferior ou superior). A MSFT possui uma volatilidade mediana durante todo o período avaliado, mas durante 2016 as variações do valor e da volatilidade foram muito altas. A empresa começou o ano de 2014 com um crescimento muito bom, e se manteve em crescimento constante. Embora algumas quedas e variações durante o caminho, o preço ao fechar o ano de 2016 foi 30 dólares mais caro que o de iniciar de 2014.
+
 
 #### Média Móvel
 ```{r, eval=TRUE}
@@ -296,3 +306,14 @@ MSFT.momentum + labs(title = "Momentum MSFT",x = "Ano", y = "Momentum")
 ###Passo 11: Realizar a análise da carteira (retorno esperado versus retorno de mercado e taxa livre de risco) e também o VaR (1% e 5%) (1.0 ponto)
 
 ###Passo 12: Justificar suas conclusões, apresentando vantagens e limitações. (1.0 ponto)
+
+## Referências
+[1] - http://www.webnoticias.fic.ufg.br/n/68881-industria-de-games-supera-o-faturamento-de-hollywood
+
+[2] - https://en.wikipedia.org/wiki/Take-Two_Interactive
+
+[3] - https://pt.wikipedia.org/wiki/Electronic_Arts
+
+[4] - https://pt.wikipedia.org/wiki/Activision_Blizzard
+
+[5] - https://pt.wikipedia.org/wiki/Microsoft

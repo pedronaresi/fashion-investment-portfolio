@@ -28,11 +28,12 @@ library(gridExtra)
 Estúdios de Cinema
 
 ###Passo 2: Fazer um recorte do tempo (ex. 3 anos) (0.5 pontos)
+Para todas as empresas o recorte do tempo será feito considerando os dados desde 1 de Janeiro de 2014 até 01 de Janeiro de 2017.
 
 ###Passo 3: Iniciar uma breve descrição do setor (contexto) (0.5 pontos)
 A indústria do cinema que para nós é um meio de entretenimento, onde podemos nos divertir, nos emocionar e entrarmos em contato com a arte audiovisual que é exposta pelos produtores do filmes, pode ser ainda mais interessante para que gosta de dinheiro e de lucros. Com o crescimento de franquias de cinema, que além de consolidadas a muitos anos, são extremamente populares ao redor do mundo, os investidores estão cada vez mais interessados em comprar ações da indústria do entretenimento.
 Em 2017 obtivemos a maior arrecadação de todos os tempos na indústria do cinema, cerca de US$ 39,92 bilhões de dólares em todo o planeta, aonde US$ 11,12 bilhões só nos EUA. Estima-se que o valor chegue aos US$ 50 bilhões até 2020. Os títulos “A bela e a fera”, “Star Wars - Os últimos Jedi” e “Velozes e furiosos 8” foram os filmes que mais arrecadaram.
-Os números, além de incríveis ao olhos dos leigos, é ainda mais incrível aos investidores e acionistas.
+Os números, além de incríveis ao olhos dos leigos, são ainda mais incrível aos investidores e acionistas. [1]
 
 ###Passo 4: Obtenção dos dados (dados das empresas selecionadas) (0.5 pontos)
 Foram selecionadas quatro grandes empresas do setor de produção cinematográfica para o estudo durante um período de 3 anos. A partir da biblioteca *quantmod* podemos usar a função `getSymbols` e carregar as informações direto do *Yahoo Finance*.
@@ -46,7 +47,7 @@ getSymbols("DIS", from="2014-01-01", to="2017-01-01")
 ##Etapa 2 - Analise Fundamentalista (2.5 pontos)
 ###Passo 5: analise dos dados individuais (ex. BA, ERJ...) (1.0 ponto)
 #### The Walt Disney Company (NYSE: DIS)
-The Walt Disney Company, conhecida simplesmente como Disney, é uma companhia multinacional estadunidense de mídia de massa sediada no Walt Disney Studios, em Burbank, Califórnia. Em dezembro de 2017 após a compra da 21st Century Fox, a empresa se tornou o maior conglomerado de mídia e entretenimento do planeta por receita, passando assim a Comcast.
+The Walt Disney Company, conhecida simplesmente como Disney, é uma companhia multinacional estadunidense de mídia de massa sediada no Walt Disney Studios, em Burbank, Califórnia. Em dezembro de 2017 após a compra da 21st Century Fox, a empresa se tornou o maior conglomerado de mídia e entretenimento do planeta por receita, passando assim a Comcast. [2]
 
 **Indicador** | **Valor**
 ------------- | -------------
@@ -58,21 +59,21 @@ Retorno Sobre o Patrimônio Líquido (ttm) | 26,10%
 Rendimento Anual de Dividendos Futuros | 1,50%
 Número de Ações | 1.503.108.494,24
 
-#### Sony Corporation (NYSE: SNE) TEM QUE ARRUMAR TA EM MOEDA JAPA
-Sony Corporation é uma empresa multinacional japonesa, sendo o quinto maior conglomerado de mídia do planeta. também atua na indústria do entretenimento sendo proprietária dos estúdios de cinema Columbia Tri-Star Pictures (Sony Pictures) e posteriormente adquiriu a Metro-Goldwyn-Mayer (MGM), porém sem a franquia de Tom e Jerry, pois essa franquia não foi vendida e posteriormente foi afiliada a Warner Bros.
+#### Sony Corporation (NYSE: SNE)
+Sony Corporation é uma empresa multinacional japonesa, sendo o quinto maior conglomerado de mídia do planeta. também atua na indústria do entretenimento sendo proprietária dos estúdios de cinema Columbia Tri-Star Pictures (Sony Pictures) e posteriormente adquiriu a Metro-Goldwyn-Mayer (MGM), porém sem a franquia de Tom e Jerry, pois essa franquia não foi vendida e posteriormente foi afiliada a Warner Bros. [3]
 
 **Indicador** | **Valor**
 ------------- | -------------
 Capitalização de Mercado | $66.890.000.000,00
-Lucro Líquido Méd. a Comum (ttm) | $54.133.772,00 ESSE
-Patrimônio Líquido Total | $26.077.064.039,70	ESSE
-Lucro pro Ação Diluído (ttm) | 4,76 ESSE
+Lucro Líquido Méd. a Comum (ttm) | $6.160.000.000,00
+Patrimônio Líquido Total | $26.343.705.279,90
+Lucro pro Ação Diluído (ttm) | 4,76
 Retorno Sobre o Patrimônio Líquido (ttm) | 19,80%
 Rendimento Anual de Dividendos Futuros | 0,54%
 Número de Ações | 1.503.108.494,24
 
 #### Twenty-First Century Fox, Inc. (NasdaqGS: FOX)
-A 21st Century Fox é uma empresa multinacional americana de meios de comunicação em massa sediada em Midtown Manhattan, Cidade de Nova Iorque. É uma das duas empresas que foram formadas a partir da separação dos negócios de editoração da News Corporation em 2013, tal como foi fundada em 1979 por Rupert Murdoch.
+A 21st Century Fox é uma empresa multinacional americana de meios de comunicação em massa sediada em Midtown Manhattan, Cidade de Nova Iorque. É uma das duas empresas que foram formadas a partir da separação dos negócios de editoração da News Corporation em 2013, tal como foi fundada em 1979 por Rupert Murdoch. [4]
 
 **Indicador** | **Valor**
 ------------- | -------------
@@ -85,7 +86,7 @@ Rendimento Anual de Dividendos Futuros | 0,74%
 Número de Ações | 1.871.915.153,98
 
 #### Comcast Corporation (NasdaqGS: CMCSA)
-A Comcast Corporation é um conglomerado de mídia e entretenimento dos Estados Unidos, fundado no ano de 1963. Em sua lista de aquisições, encontra-se a empresa NBC Universal, a produtora de animações DreamWorks e várias outras empresas.
+A Comcast Corporation é um conglomerado de mídia e entretenimento dos Estados Unidos, fundado no ano de 1963. Em sua lista de aquisições, encontra-se a empresa NBC Universal, a produtora de animações DreamWorks e várias outras empresas. [5]
 
 **Indicador** | **Valor**
 ------------- | -------------
@@ -106,27 +107,27 @@ O indicador a ser verificado é a divisão entre a Capitalização de Mercado e 
 **Ação** | **P/VP**
 --- | ---
 DIS | 3,55
-SNE | 
+SNE | 1,37
 FOX | 4,69	
 CMCSA | 2,61
 
 #### LPA
-O indicador a ser verificado agora, Lucro por Ação Diluído, é Lucro Líquido nos últimos doze meses dividido pelo número de ações disponíveis no mercado. Podemos assim, certificar o quão lucrativa uma única ação foi nos últimos doze meses. Quanto maior esse valor, mais lucrativa ela é. Ao analisar a tabela podemos ver que a DIS eé disparada a que mais lucra no segmento, se tornando a preferidada ao analisarmos o indicador de LPA.
+O indicador a ser verificado agora, Lucro por Ação Diluído, é Lucro Líquido nos últimos doze meses dividido pelo número de ações disponíveis no mercado. Podemos assim, certificar o quão lucrativa uma única ação foi nos últimos doze meses. Quanto maior esse valor, mais lucrativa ela é. Ao analisar a tabela podemos ver que a DIS é disparada a que mais lucra no segmento, se tornando a preferidada ao analisarmos o indicador de LPA.
 
 **Ação** | **LPA**
 --- | ---
 DIS | 8,36
-SNE | 
+SNE | 4,76
 FOX | 2,63	
 CMCSA | 5,18
 
 #### ROE
-O indicador a ser verificado agora, Retorno sobre o Patrimônio Líquido, é Lucro Líquido nos últimos doze meses dividido pelo Patrimônio Líquido nos últimos doze meses. Em outras palavras, o ROE é a capacidade de um empresa de gerar lucro sobre o próprio patrimônio líquido dela. Ao compararmos as empresas selecionadas podemos verificar que embora a DIS tenha um valor de mercado maior, e lucro maiores, a CMCSA a consegue ultrapassar com 11% a mais de retorno sobre o patrimônio, o se tornando assim um ótimo custo benefício para investimento. Ate a FOX, que nos outros indicadores se mostrou menos eficiente que a DIS, ultrapassou o ROE gigante do Mickey.
+O indicador a ser verificado agora, Retorno sobre o Patrimônio Líquido, é Lucro Líquido nos últimos doze meses dividido pelo Patrimônio Líquido nos últimos doze meses. Em outras palavras, o ROE é a capacidade de um empresa de gerar lucro sobre o próprio patrimônio líquido dela. Ao compararmos as empresas selecionadas podemos verificar que embora a DIS tenha um valor de mercado maior, e lucro maiores, a CMCSA a consegue ultrapassar com 11% a mais de retorno sobre o patrimônio, o se tornando assim um ótimo custo benefício para investimento. Até a FOX, que nos outros indicadores se mostrou menos eficiente que a DIS, ultrapassou o ROE gigante do Mickey.
 
 **Ação** | **ROE**
 --- | ---
 DIS | 26,10%
-SNE | 
+SNE | 19,80%
 FOX | 25,67%
 CMCSA | 37,03%
 
@@ -136,7 +137,7 @@ Outro indicador interessante a ser verificado é o Rendimento Anual de Dividendo
 **Ação** | **Div. Yield** | **Valor da Ação**
 --- | --- | ---
 DIS | 1,50% | $115,49
-SNE | 0,00% |
+SNE | 0,54% | $44,50
 FOX | 0,74% | $49,03
 CMCSA | 2,03% | $39,01
 
@@ -165,6 +166,8 @@ DIS.pctB <- DIS.pctB + theme_tq()
 grid.arrange(DIS.bband,DIS.pctB, nrow = 2, heights=c(2/3, 1/3))
 ```
 
+Ao analisar o gráfico de Bollinger Bands da DIS podemos de cara encontrar três momentos onde o ativo entrou em oversold (vela ultrapassa a banda inferior), que foram datas em 2014, 2015 e 2016 (uma média de uma vez por ano). Em nenhum momento o ativo entrou em um overbought significativo. Em relação a volatilidade: o ativo se comprou pouco volátil, entretanto, em alguns momento, principalmente em 2016, a distância entre as bandas aumentou muito e logo em seguida o ativo entrou em oversold.
+
 ```{r, eval=TRUE}
 bbands.SNE <- BBands(SNE[,6], sd = 2, n = 20)
 bbands.SNE <- cbind(index(bbands.SNE), data.frame(bbands.SNE), data.frame(SNE[,-5]))
@@ -182,6 +185,8 @@ SNE.pctB <- SNE.pctB + labs(x = "Ano", y = "%B")
 SNE.pctB <- SNE.pctB + theme_tq()
 grid.arrange(SNE.bband,SNE.pctB, nrow = 2, heights=c(2/3, 1/3))
 ```
+
+Ao analisar o gráfico de Bollinger Bands da SNE podemos de cara encontrar um momento onde o ativo entrou em oversold significativo (vela ultrapassa a banda inferior), que foi no segundo semestre de 2016. Em nenhum momento o ativo entrou em um overbought significativo. Em relação a volatilidade: o ativo se comportou pouco volátil (menos volátil  que a DIS), entretanto, momentos antes do oversold de 2016, a volatilidade atingiu um valor muito alto.
 
 ```{r, eval=TRUE}
 bbands.FOX <- BBands(FOX[,6], sd = 2, n = 20)
@@ -201,6 +206,8 @@ FOX.pctB <- FOX.pctB + theme_tq()
 grid.arrange(FOX.bband,FOX.pctB, nrow = 2, heights=c(2/3, 1/3))
 ```
 
+Ao analisar o gráfico de Bollinger Bands da FOX podemos verificar três momentos onde o ativo entrou em oversold significativo (vela ultrapassa a banda inferior), que foi duas vezes em 2015 e uma em 2016.  Em nenhum momento o ativo entrou em um overbought significativo. A FOX começou o ano de 2014 com um crescimento muito bom, entretanto, ao começar 2015, os valores começaram a cair e a volatilidade aumentar,. Foi então que no 3º bimestre de novembro houve uma queda muito drástica no valor da ação, que chegou algo em torno da metade do valor em que a FOX começou o ano de 2015. 
+
 ```{r, eval=TRUE}
 bbands.CMCSA <- BBands(CMCSA[,6], sd = 2, n = 20)
 bbands.CMCSA <- cbind(index(bbands.CMCSA), data.frame(bbands.CMCSA), data.frame(CMCSA[,-5]))
@@ -218,6 +225,8 @@ CMCSA.pctB <- CMCSA.pctB + labs(x = "Ano", y = "%B")
 CMCSA.pctB <- CMCSA.pctB + theme_tq()
 grid.arrange(CMCSA.bband,CMCSA.pctB, nrow = 2, heights=c(2/3, 1/3))
 ```
+
+Ao analisar o gráfico de Bollinger Bands da CMCSA podemos verificar apenas um momento onde a ação entrou em oversold significativo (vela ultrapassa a banda inferior), que foi no 3º bimestre de 2015. Em nenhum momento o ativo entrou em um overbought significativo. A CMCSA começou o ano de 2014 com um crescimento muito bom,  se manter em crescimento constante. Embora algumas quedas e variações durante o caminho, a volatilidade se mostrou baixa e o ativo em três anos passou a valer um terço a mais do valor inicial da amostra. 
 
 #### Média Móvel
 ```{r, eval=TRUE}
@@ -298,3 +307,10 @@ CMCSA.momentum + labs(title = "Momentum CMCSA",x = "Ano", y = "Momentum")
 ###Passo 11: Realizar a análise da carteira (retorno esperado versus retorno de mercado e taxa livre de risco) e também o VaR (1% e 5%) (1.0 ponto)
 
 ###Passo 12: Justificar suas conclusões, apresentando vantagens e limitações. (1.0 ponto)
+
+## Referências
+[1] - http://www.webnoticias.fic.ufg.br/n/68881-industria-de-games-supera-o-faturamento-de-hollywood
+[2] - https://pt.wikipedia.org/wiki/The_Walt_Disney_Company
+[3] - https://pt.wikipedia.org/wiki/Sony
+[4] - https://pt.wikipedia.org/wiki/21st_Century_Fox
+[5] - https://pt.wikipedia.org/wiki/Comcast
