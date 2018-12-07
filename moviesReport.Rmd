@@ -1,0 +1,300 @@
+---
+title: "Carteira de Investimento de Estúdios de Cinema 🎬"
+output:
+  html_document: default
+  pdf_document: default
+author: "Pedro Naresi"
+date: "2018-12-07"
+---
+
+```{r, eval=TRUE, message=F, warning=F, echo=FALSE}
+library(tidyverse)
+library(ggthemes)
+library(gplots)
+library(knitr)
+library(quantmod)
+library(rmarkdown)
+library(shiny)
+library(xts)
+library(ggplot2)
+library(TTR)
+library(tidyquant)
+library(gridExtra)
+```
+
+##Etapa 1: Estruturação (2.0 pontos)
+
+###Passo 1: identificar o setor da economia (ex. aviação, tecnologia, automoveis, bancos etc.) (0.5 pontos)
+Estúdios de Cinema
+
+###Passo 2: Fazer um recorte do tempo (ex. 3 anos) (0.5 pontos)
+
+###Passo 3: Iniciar uma breve descrição do setor (contexto) (0.5 pontos)
+A indústria do cinema que para nós é um meio de entretenimento, onde podemos nos divertir, nos emocionar e entrarmos em contato com a arte audiovisual que é exposta pelos produtores do filmes, pode ser ainda mais interessante para que gosta de dinheiro e de lucros. Com o crescimento de franquias de cinema, que além de consolidadas a muitos anos, são extremamente populares ao redor do mundo, os investidores estão cada vez mais interessados em comprar ações da indústria do entretenimento.
+Em 2017 obtivemos a maior arrecadação de todos os tempos na indústria do cinema, cerca de US$ 39,92 bilhões de dólares em todo o planeta, aonde US$ 11,12 bilhões só nos EUA. Estima-se que o valor chegue aos US$ 50 bilhões até 2020. Os títulos “A bela e a fera”, “Star Wars - Os últimos Jedi” e “Velozes e furiosos 8” foram os filmes que mais arrecadaram.
+Os números, além de incríveis ao olhos dos leigos, é ainda mais incrível aos investidores e acionistas.
+
+###Passo 4: Obtenção dos dados (dados das empresas selecionadas) (0.5 pontos)
+Foram selecionadas quatro grandes empresas do setor de produção cinematográfica para o estudo durante um período de 3 anos. A partir da biblioteca *quantmod* podemos usar a função `getSymbols` e carregar as informações direto do *Yahoo Finance*.
+```{r, eval=TRUE, include=FALSE, message=F, warning=F}
+getSymbols("SNE", from="2014-01-01", to="2017-01-01")
+getSymbols("CMCSA", from="2014-01-01", to="2017-01-01")
+getSymbols("FOX", from="2014-01-01", to="2017-01-01")
+getSymbols("DIS", from="2014-01-01", to="2017-01-01")
+```
+
+##Etapa 2 - Analise Fundamentalista (2.5 pontos)
+###Passo 5: analise dos dados individuais (ex. BA, ERJ...) (1.0 ponto)
+#### The Walt Disney Company (NYSE: DIS)
+The Walt Disney Company, conhecida simplesmente como Disney, é uma companhia multinacional estadunidense de mídia de massa sediada no Walt Disney Studios, em Burbank, Califórnia. Em dezembro de 2017 após a compra da 21st Century Fox, a empresa se tornou o maior conglomerado de mídia e entretenimento do planeta por receita, passando assim a Comcast.
+
+**Indicador** | **Valor**
+------------- | -------------
+Capitalização de Mercado | $173.594.000.000,00
+Lucro Líquido Méd. a Comum (ttm) | $12.600.000.000,00 
+Patrimônio Líquido Total | $48.773.000.000,00	
+Lucro pro Ação Diluído (ttm) | 8,36
+Retorno Sobre o Patrimônio Líquido (ttm) | 26,10%
+Rendimento Anual de Dividendos Futuros | 1,50%
+Número de Ações | 1.503.108.494,24
+
+#### Sony Corporation (NYSE: SNE) TEM QUE ARRUMAR TA EM MOEDA JAPA
+Sony Corporation é uma empresa multinacional japonesa, sendo o quinto maior conglomerado de mídia do planeta. também atua na indústria do entretenimento sendo proprietária dos estúdios de cinema Columbia Tri-Star Pictures (Sony Pictures) e posteriormente adquiriu a Metro-Goldwyn-Mayer (MGM), porém sem a franquia de Tom e Jerry, pois essa franquia não foi vendida e posteriormente foi afiliada a Warner Bros.
+
+**Indicador** | **Valor**
+------------- | -------------
+Capitalização de Mercado | $66.890.000.000,00
+Lucro Líquido Méd. a Comum (ttm) | $54.133.772,00 ESSE
+Patrimônio Líquido Total | $26.077.064.039,70	ESSE
+Lucro pro Ação Diluído (ttm) | 4,76 ESSE
+Retorno Sobre o Patrimônio Líquido (ttm) | 19,80%
+Rendimento Anual de Dividendos Futuros | 0,54%
+Número de Ações | 1.503.108.494,24
+
+#### Twenty-First Century Fox, Inc. (NasdaqGS: FOX)
+A 21st Century Fox é uma empresa multinacional americana de meios de comunicação em massa sediada em Midtown Manhattan, Cidade de Nova Iorque. É uma das duas empresas que foram formadas a partir da separação dos negócios de editoração da News Corporation em 2013, tal como foi fundada em 1979 por Rupert Murdoch.
+
+**Indicador** | **Valor**
+------------- | -------------
+Capitalização de Mercado | $91.780.000.000,00
+Lucro Líquido Méd. a Comum (ttm) | $4.930.000.000,00 
+Patrimônio Líquido Total | $19.564.000.000,00	
+Lucro pro Ação Diluído (ttm) | 2,63
+Retorno Sobre o Patrimônio Líquido (ttm) | 25,67%
+Rendimento Anual de Dividendos Futuros | 0,74%
+Número de Ações | 1.871.915.153,98
+
+#### Comcast Corporation (NasdaqGS: CMCSA)
+A Comcast Corporation é um conglomerado de mídia e entretenimento dos Estados Unidos, fundado no ano de 1963. Em sua lista de aquisições, encontra-se a empresa NBC Universal, a produtora de animações DreamWorks e várias outras empresas.
+
+**Indicador** | **Valor**
+------------- | -------------
+Capitalização de Mercado | $179.340.000.000,00
+Lucro Líquido Méd. a Comum (ttm) | $24.200.000.000,00 
+Patrimônio Líquido Total | $68.606.000.000,00	
+Lucro pro Ação Diluído (ttm) | 5,18
+Retorno Sobre o Patrimônio Líquido (ttm) | 37,03%
+Rendimento Anual de Dividendos Futuros | 2,03%
+Número de Ações | 4.597.282.448,01
+
+###Passo 6: analise fundamentalista (apresentação e interpretação) (1.0 ponto)
+Como uma análise fundamentalista completa é composta por inúmeros indicadores e se torna muitas vezes muito complexa, foram escolhidos apenas alguns indicadores para assim realizar a comparação com as outras companhias escolhidas.
+
+#### P/VP
+O indicador a ser verificado é a divisão entre a Capitalização de Mercado e o Patrimônio Líquido Total, que informa quanto o mercado está disposto a pagar sobre o Patrimônio Líquido da empresa (quanto o valor mais próximo de 1, melhor). Podemos certificar que mesmo com a consolidação da DIS a CMCSA é mais recomendada ao investimento.
+
+**Ação** | **P/VP**
+--- | ---
+DIS | 3,55
+SNE | 
+FOX | 4,69	
+CMCSA | 2,61
+
+#### LPA
+O indicador a ser verificado agora, Lucro por Ação Diluído, é Lucro Líquido nos últimos doze meses dividido pelo número de ações disponíveis no mercado. Podemos assim, certificar o quão lucrativa uma única ação foi nos últimos doze meses. Quanto maior esse valor, mais lucrativa ela é. Ao analisar a tabela podemos ver que a DIS eé disparada a que mais lucra no segmento, se tornando a preferidada ao analisarmos o indicador de LPA.
+
+**Ação** | **LPA**
+--- | ---
+DIS | 8,36
+SNE | 
+FOX | 2,63	
+CMCSA | 5,18
+
+#### ROE
+O indicador a ser verificado agora, Retorno sobre o Patrimônio Líquido, é Lucro Líquido nos últimos doze meses dividido pelo Patrimônio Líquido nos últimos doze meses. Em outras palavras, o ROE é a capacidade de um empresa de gerar lucro sobre o próprio patrimônio líquido dela. Ao compararmos as empresas selecionadas podemos verificar que embora a DIS tenha um valor de mercado maior, e lucro maiores, a CMCSA a consegue ultrapassar com 11% a mais de retorno sobre o patrimônio, o se tornando assim um ótimo custo benefício para investimento. Ate a FOX, que nos outros indicadores se mostrou menos eficiente que a DIS, ultrapassou o ROE gigante do Mickey.
+
+**Ação** | **ROE**
+--- | ---
+DIS | 26,10%
+SNE | 
+FOX | 25,67%
+CMCSA | 37,03%
+
+#### Div. Yield
+Outro indicador interessante a ser verificado é o Rendimento Anual de Dividendos Futuros, que é o quanto uma empresa paga em dividendos em relação ao preço de suas ações a cada ano. O que buscamos aqui são empresas que pagam um dividendo alto e tem um valor de ação não tão alto. Entretanto, DY elevados são, frequentemente, indicadores de baixas perspectivas de crescimento. Um DY muito elevado pode ser um alerta de que a empresa está enfrentando dificuldades financeiras e que o mercado espera que isso seja acompanhado por cortes nos dividendos futuros. Se atentando ao dados, verificamos que a quem mais paga dividendo é a CMCSA e com um preço de ação muito menor que a gigante DIS.
+
+**Ação** | **Div. Yield** | **Valor da Ação**
+--- | --- | ---
+DIS | 1,50% | $115,49
+SNE | 0,00% |
+FOX | 0,74% | $49,03
+CMCSA | 2,03% | $39,01
+
+###Passo 7: Principais conclusões da analise fundamentalista (0.5 pontos)
+Depois de todas as análises fundamentalistas chegamos a conclusão que as duas ações que mais se destacam no segmento são a DIS e CMCSA. Os bons valores nos indicadores refletem a atuação da DIS na produção de conteúdo de entretenimento como os filmes da franquia Marvel e Star Wars (que são fenômenos de bilheteria e de venda de produtos) e da produção de séries de TV nos EUA pela CMCSA, cujo estúdio é responsável por grande parte do conteúdo cabeado e aberto. Logo em seguida, temos a FOX com valores não tão animadores quanto as duas maiores (provavelmente devido aos cortes e o enfraquecimento do estúdio devido ao quase monopólio da DIS na produção de filmes blockbusters). Por último, a SNE, com valores ainda menores, devido ao mesmo motivo de enfraquecimento da FOX.
+
+##Etapa 3 - Análise Técnica (2.5 pontos)
+
+###Passo 8: Utilizar as medidas estudadas: Média Móvel, Bollinger Bands, Momentum. (1.5 pontos)
+#### *Bollinger Bands*
+```{r, eval=TRUE}
+bbands.DIS <- BBands(DIS[,6], sd = 2, n = 20)
+bbands.DIS <- cbind(index(bbands.DIS), data.frame(bbands.DIS), data.frame(DIS[,-5]))
+rownames(bbands.DIS) <- seq(1, nrow(bbands.DIS), 1)
+names(bbands.DIS) <- paste(c("date", "dn", "mavg", "up", "pctB", "open","high","low","close","adjusted"))
+bbands.DIS <- bbands.DIS[-c(1:20),]
+
+DIS.bband <- ggplot(data = bbands.DIS, aes(x = date, y = close, open = open, close = close, low = low, high = high)) + geom_candlestick(color_up = "gray30", color_down = "gray30", fill_up = "green3", fill_down = "red")
+DIS.bband <- DIS.bband + geom_bbands(ma_fun = SMA, sd = 2, n = 20, linetype = 2, size = 0.5, alpha = 0.2, fill = palette_light()[[1]], color_bands = palette_light()[[1]], color_ma = palette_light()[[2]])
+DIS.bband <- DIS.bband + labs(title = "Bollinger Bands DIS", x = NULL, y = "Valor da Ação")
+DIS.bband <- DIS.bband + theme_tq() + theme(axis.title.x=element_blank(), axis.text.x=element_blank(), axis.ticks.x=element_blank())
+DIS.bband <- DIS.bband + scale_y_continuous()
+DIS.pctB <- ggplot(data = bbands.DIS, aes(date, pctB)) + geom_line(colour ="darkgreen", size = 0.5)
+DIS.pctB <- DIS.pctB + labs(x = "Ano", y = "%B")
+DIS.pctB <- DIS.pctB + theme_tq()
+grid.arrange(DIS.bband,DIS.pctB, nrow = 2, heights=c(2/3, 1/3))
+```
+
+```{r, eval=TRUE}
+bbands.SNE <- BBands(SNE[,6], sd = 2, n = 20)
+bbands.SNE <- cbind(index(bbands.SNE), data.frame(bbands.SNE), data.frame(SNE[,-5]))
+rownames(bbands.SNE) <- seq(1, nrow(bbands.SNE), 1)
+names(bbands.SNE) <- paste(c("date", "dn", "mavg", "up", "pctB", "open","high","low","close","adjusted"))
+bbands.SNE <- bbands.SNE[-c(1:20),]
+
+SNE.bband <- ggplot(data = bbands.SNE, aes(x = date, y = close, open = open, close = close, low = low, high = high)) + geom_candlestick(color_up = "gray30", color_down = "gray30", fill_up = "green3", fill_down = "red")
+SNE.bband <- SNE.bband + geom_bbands(ma_fun = SMA, sd = 2, n = 20, linetype = 2, size = 0.5, alpha = 0.2, fill = palette_light()[[1]], color_bands = palette_light()[[1]], color_ma = palette_light()[[2]])
+SNE.bband <- SNE.bband + labs(title = "Bollinger Bands SNE", x = NULL, y = "Valor da Ação")
+SNE.bband <- SNE.bband + theme_tq() + theme(axis.title.x=element_blank(), axis.text.x=element_blank(), axis.ticks.x=element_blank())
+SNE.bband <- SNE.bband + scale_y_continuous()
+SNE.pctB <- ggplot(data = bbands.SNE, aes(date, pctB)) + geom_line(colour ="darkgreen", size = 0.5)
+SNE.pctB <- SNE.pctB + labs(x = "Ano", y = "%B")
+SNE.pctB <- SNE.pctB + theme_tq()
+grid.arrange(SNE.bband,SNE.pctB, nrow = 2, heights=c(2/3, 1/3))
+```
+
+```{r, eval=TRUE}
+bbands.FOX <- BBands(FOX[,6], sd = 2, n = 20)
+bbands.FOX <- cbind(index(bbands.FOX), data.frame(bbands.FOX), data.frame(FOX[,-5]))
+rownames(bbands.FOX) <- seq(1, nrow(bbands.FOX), 1)
+names(bbands.FOX) <- paste(c("date", "dn", "mavg", "up", "pctB", "open","high","low","close","adjusted"))
+bbands.FOX <- bbands.FOX[-c(1:20),]
+
+FOX.bband <- ggplot(data = bbands.FOX, aes(x = date, y = close, open = open, close = close, low = low, high = high)) + geom_candlestick(color_up = "gray30", color_down = "gray30", fill_up = "green3", fill_down = "red")
+FOX.bband <- FOX.bband + geom_bbands(ma_fun = SMA, sd = 2, n = 20, linetype = 2, size = 0.5, alpha = 0.2, fill = palette_light()[[1]], color_bands = palette_light()[[1]], color_ma = palette_light()[[2]])
+FOX.bband <- FOX.bband + labs(title = "Bollinger Bands FOX", x = NULL, y = "Valor da Ação")
+FOX.bband <- FOX.bband + theme_tq() + theme(axis.title.x=element_blank(), axis.text.x=element_blank(), axis.ticks.x=element_blank())
+FOX.bband <- FOX.bband + scale_y_continuous()
+FOX.pctB <- ggplot(data = bbands.FOX, aes(date, pctB)) + geom_line(colour ="darkgreen", size = 0.5)
+FOX.pctB <- FOX.pctB + labs(x = "Ano", y = "%B")
+FOX.pctB <- FOX.pctB + theme_tq()
+grid.arrange(FOX.bband,FOX.pctB, nrow = 2, heights=c(2/3, 1/3))
+```
+
+```{r, eval=TRUE}
+bbands.CMCSA <- BBands(CMCSA[,6], sd = 2, n = 20)
+bbands.CMCSA <- cbind(index(bbands.CMCSA), data.frame(bbands.CMCSA), data.frame(CMCSA[,-5]))
+rownames(bbands.CMCSA) <- seq(1, nrow(bbands.CMCSA), 1)
+names(bbands.CMCSA) <- paste(c("date", "dn", "mavg", "up", "pctB", "open","high","low","close","adjusted"))
+bbands.CMCSA <- bbands.CMCSA[-c(1:20),]
+
+CMCSA.bband <- ggplot(data = bbands.CMCSA, aes(x = date, y = close, open = open, close = close, low = low, high = high)) + geom_candlestick(color_up = "gray30", color_down = "gray30", fill_up = "green3", fill_down = "red")
+CMCSA.bband <- CMCSA.bband + geom_bbands(ma_fun = SMA, sd = 2, n = 20, linetype = 2, size = 0.5, alpha = 0.2, fill = palette_light()[[1]], color_bands = palette_light()[[1]], color_ma = palette_light()[[2]])
+CMCSA.bband <- CMCSA.bband + labs(title = "Bollinger Bands CMCSA", x = NULL, y = "Valor da Ação")
+CMCSA.bband <- CMCSA.bband + theme_tq() + theme(axis.title.x=element_blank(), axis.text.x=element_blank(), axis.ticks.x=element_blank())
+CMCSA.bband <- CMCSA.bband + scale_y_continuous()
+CMCSA.pctB <- ggplot(data = bbands.CMCSA, aes(date, pctB)) + geom_line(colour ="darkgreen", size = 0.5)
+CMCSA.pctB <- CMCSA.pctB + labs(x = "Ano", y = "%B")
+CMCSA.pctB <- CMCSA.pctB + theme_tq()
+grid.arrange(CMCSA.bband,CMCSA.pctB, nrow = 2, heights=c(2/3, 1/3))
+```
+
+#### Média Móvel
+```{r, eval=TRUE}
+DIS.mm <- ggplot(data = bbands.DIS, aes(x = date, y = close)) + geom_candlestick(aes(x = date, open = open, high = high,low = low,close = close), color_up = "gray30", color_down = "gray30", fill_up = "green3", fill_down = "red") + theme_tq()
+DIS.mm <- DIS.mm + geom_ma(ma_fun = SMA, n  = 50, na.rm = T, linetype = 1, colour = "Turquoise 1")
+DIS.mm <- DIS.mm + geom_ma(ma_fun = SMA, n = 200, na.rm = T, linetype = 1, colour = "darkorchid1")
+DIS.mm + labs(title = "Média Móvel DIS", x = "Ano", y = "Valor da Ação")
+``` 
+
+```{r, eval=TRUE}
+SNE.mm <- ggplot(data = bbands.SNE, aes(x = date, y = close)) + geom_candlestick(aes(x = date, open = open, high = high,low = low,close = close), color_up = "gray30", color_down = "gray30", fill_up = "green3", fill_down = "red") + theme_tq()
+SNE.mm <- SNE.mm + geom_ma(ma_fun = SMA, n  = 50, na.rm = T, linetype = 1, colour = "Turquoise 1")
+SNE.mm <- SNE.mm + geom_ma(ma_fun = SMA, n = 200, na.rm = T, linetype = 1, colour = "darkorchid1")
+SNE.mm + labs(title = "Média Móvel SNE", x = "Ano", y = "Valor da Ação")
+``` 
+
+```{r, eval=TRUE}
+FOX.mm <- ggplot(data = bbands.FOX, aes(x = date, y = close)) + geom_candlestick(aes(x = date, open = open, high = high,low = low,close = close), color_up = "gray30", color_down = "gray30", fill_up = "green3", fill_down = "red") + theme_tq()
+FOX.mm <- FOX.mm + geom_ma(ma_fun = SMA, n  = 50, na.rm = T, linetype = 1, colour = "Turquoise 1")
+FOX.mm <- FOX.mm + geom_ma(ma_fun = SMA, n = 200, na.rm = T, linetype = 1, colour = "darkorchid1")
+FOX.mm + labs(title = "Média Móvel FOX", x = "Ano", y = "Valor da Ação")
+``` 
+
+```{r, eval=TRUE}
+CMCSA.mm <- ggplot(data = bbands.CMCSA, aes(x = date, y = close)) + geom_candlestick(aes(x = date, open = open, high = high,low = low,close = close), color_up = "gray30", color_down = "gray30", fill_up = "green3", fill_down = "red") + theme_tq()
+CMCSA.mm <- CMCSA.mm + geom_ma(ma_fun = SMA, n  = 50, na.rm = T, linetype = 1, colour = "Turquoise 1")
+CMCSA.mm <- CMCSA.mm + geom_ma(ma_fun = SMA, n = 200, na.rm = T, linetype = 1, colour = "darkorchid1")
+CMCSA.mm + labs(title = "Média Móvel CMCSA", x = "Ano", y = "Valor da Ação")
+``` 
+
+#### *Momentum*
+```{r, eval=TRUE}
+momentum.DIS <- RSI(DIS$DIS.Close, n = 14)
+momentum.DIS <- cbind(index(momentum.DIS), data.frame(momentum.DIS))
+rownames(bbands.DIS) <- seq(1, nrow(bbands.DIS), 1)
+momentum.DIS <- momentum.DIS[-c(1:14),]
+names(momentum.DIS) <- paste(c("date","Momentum"))
+DIS.momentum <- ggplot(data = momentum.DIS, aes (x = date, y = Momentum)) + geom_line() + theme_tq() + ylim(0, 100)
+DIS.momentum + labs(title = "Momentum DIS",x = "Ano", y = "Momentum")
+``` 
+
+```{r, eval=TRUE}
+momentum.SNE <- RSI(SNE$SNE.Close, n = 14)
+momentum.SNE <- cbind(index(momentum.SNE), data.frame(momentum.SNE))
+rownames(bbands.SNE) <- seq(1, nrow(bbands.SNE), 1)
+momentum.SNE <- momentum.SNE[-c(1:14),]
+names(momentum.SNE) <- paste(c("date","Momentum"))
+SNE.momentum <- ggplot(data = momentum.SNE, aes (x = date, y = Momentum)) + geom_line() + theme_tq() + ylim(0, 100)
+SNE.momentum + labs(title = "Momentum SNE",x = "Ano", y = "Momentum")
+```  
+
+```{r, eval=TRUE}
+momentum.FOX <- RSI(FOX$FOX.Close, n = 14)
+momentum.FOX <- cbind(index(momentum.FOX), data.frame(momentum.FOX))
+rownames(bbands.FOX) <- seq(1, nrow(bbands.FOX), 1)
+momentum.FOX <- momentum.FOX[-c(1:14),]
+names(momentum.FOX) <- paste(c("date","Momentum"))
+FOX.momentum <- ggplot(data = momentum.FOX, aes (x = date, y = Momentum)) + geom_line() + theme_tq() + ylim(0, 100)
+FOX.momentum + labs(title = "Momentum FOX",x = "Ano", y = "Momentum")
+``` 
+
+```{r, eval=TRUE}
+momentum.CMCSA <- RSI(CMCSA$CMCSA.Close, n = 14)
+momentum.CMCSA <- cbind(index(momentum.CMCSA), data.frame(momentum.CMCSA))
+rownames(bbands.CMCSA) <- seq(1, nrow(bbands.CMCSA), 1)
+momentum.CMCSA <- momentum.CMCSA[-c(1:14),]
+names(momentum.CMCSA) <- paste(c("date","Momentum"))
+CMCSA.momentum <- ggplot(data = momentum.CMCSA, aes (x = date, y = Momentum)) + geom_line() + theme_tq() + ylim(0, 100)
+CMCSA.momentum + labs(title = "Momentum CMCSA",x = "Ano", y = "Momentum")
+```
+
+###Passo 9: Principais conclusões da Análise Técnica (1.0 ponto)
+
+##Etapa 4- Formação da Carteira (3.0 pontos)
+
+###Passo 10: Baseado nas informações e conclusões obtidas, você deverá compor uma carteira de investimento (ex. definindo pesos) (1.0 ponto)
+
+###Passo 11: Realizar a análise da carteira (retorno esperado versus retorno de mercado e taxa livre de risco) e também o VaR (1% e 5%) (1.0 ponto)
+
+###Passo 12: Justificar suas conclusões, apresentando vantagens e limitações. (1.0 ponto)
