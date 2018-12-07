@@ -76,9 +76,7 @@ MSFT.mm <- MSFT.mm + geom_ma(ma_fun = SMA, n = 200, na.rm = T, linetype = 1, col
 MSFT.mm + labs(title = "Média Móvel MSFT", x = "Ano", y = "Valor da Ação")
 
 #bollinger bands
-MSFT.bband <- ggplot(data = bbands.MSFT, aes(x = date, y = close, open = open, close = close, low = low, high = high)) + geom_candlestick(color_up = "gray30", color_down = "gray30", fill_up = "green3", fill_down = "red")#plotar a media movel
-#MSFT.bband <- MSFT.bband + geom_line(mapping = aes(date, up), colour = "gray") #adicionar camada da banda superior
-#MSFT.bband <- MSFT.bband + geom_line(mapping = aes(date, dn), colour = "gray") #adicionar camada da banda inferioi
+MSFT.bband <- ggplot(data = bbands.MSFT, aes(x = date, y = close, open = open, close = close, low = low, high = high)) + geom_line(size = 1, alpha  = 0.5)
 MSFT.bband <- MSFT.bband + geom_bbands(ma_fun = SMA, sd = 2, n = 20, linetype = 2, size = 0.5, alpha = 0.2, fill = palette_light()[[1]], color_bands = palette_light()[[1]], color_ma = palette_light()[[2]])
 MSFT.bband <- MSFT.bband + labs(title = "Bollinger Bands MSFT", x = NULL, y = "Valor da Ação")
 MSFT.bband <- MSFT.bband + theme_tq() + theme(axis.title.x=element_blank(), axis.text.x=element_blank(), axis.ticks.x=element_blank())
@@ -98,3 +96,29 @@ names(momentum.FOX) <- paste(c("date","Momentum"))
 
 FOX.momentum <- ggplot(data = momentum.FOX, aes (x = date, y = Momentum)) + geom_line() + theme_tq() + ylim(0, 100)
 FOX.momentum + labs(title = "Momentum FOX",x = "Ano", y = "Momentum") 
+
+Tb <- tq_get(c("ATVI","EA","MSFT","TTWO"), get = "stock.prices", complete_cases = TRUE, from="2014-01-01", to="2017-01-01")
+
+# Get returns for individual stock components
+Rb <- "^GSPC" %>%
+  tq_get(get  = "stock.prices", from="2014-01-01", to="2017-01-01") %>%
+  tq_transmute(adjusted, periodReturn, period = "monthly", col_rename = "Rb")
+
+RaRb <- left_join(pReturn, Rb, by = c("date" = "date"))
+
+retorno <- ggplot(data = RaRb, aes(x = date, y = portfolio.returns)) + geom_line(colour ="darkorchid1")
+retorno <- retorno + geom_line(aes(x = date, y = Rb), colour = "red")
+retorno
+
+monthly_returns_stocks <- Tb %>%
+  group_by(symbol) %>%
+  tq_transmute(adjusted, periodReturn, period = "monthly")
+
+weights_df <- tibble(symbol = c("ATVI", "EA", "MSFT","TTWO"),
+                     weights = c(0.50, 0.20, 0.10, 0.20))
+pReturn <-tq_portfolio(data = monthly_returns_stocks,
+             assets_col = symbol,
+             returns_col = monthly.returns,
+             weights = weights_df,
+             col_rename = NULL,
+             wealth.index = FALSE)
