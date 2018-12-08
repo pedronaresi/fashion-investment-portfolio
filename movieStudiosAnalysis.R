@@ -120,7 +120,7 @@ Var <- RaRb%>%
   tq_performance(Ra = Ra, Rb = NULL, performance_fun = VaR)
 
 #multiplos portfolios
-stock_returns_monthly <- c("ATVI", "EA", "MSFT","TTWO") %>%
+stock_returns_monthly <- c("SNE", "FOX", "DIS","CMCSA") %>%
   tq_get(get  = "stock.prices",
          from="2014-01-01", to="2017-01-01") %>%
   group_by(symbol) %>%
@@ -143,7 +143,7 @@ weights <- c(
   0.15, 0.15, 0.20, 0.50,
   0.25, 0.25, 0.25, 0.25
 )
-stocks <- c("ATVI", "EA", "MSFT","TTWO")
+stocks <- c("SNE", "FOX", "DIS","CMCSA")
 weights_table <-  tibble(stocks) %>%
   tq_repeat_df(n = 3) %>%
   bind_cols(tibble(weights)) %>%
@@ -161,20 +161,6 @@ RaRb_multiple_portfolio <- left_join(portfolio_returns_monthly_multi,
                                      baseline_returns_monthly,
                                      by = "date")
 RaRb_multiple_portfolio
-
-
-CAPM <- RaRb_multiple_portfolio %>%
-  tq_performance(Ra = Ra, Rb = Rb, performance_fun = table.CAPM)
-CAPM
-
-RaRb_multiple_portfolio %>%
-  tq_performance(Ra = Ra, Rb = NULL, performance_fun = VaR)
-Sharpe<-RaRb_multiple_portfolio %>%
-  tq_performance(Ra = Ra, Rb = NULL, performance_fun = SharpeRatio)
-Sharpe
-
-RaRb_multiple_portfolio %>%
-  tq_performance(Ra = Ra, Rb = NULL, performance_fun = table.AnnualizedReturns)
 
 portfolio_growth_monthly_multi <- stock_returns_monthly_multi %>%
   tq_portfolio(assets_col   = symbol, 
@@ -221,3 +207,18 @@ portfolio_returns_monthly %>%
   theme_tq() +
   scale_color_tq() +
   scale_y_continuous(labels = scales::percent)
+
+###CAPM
+
+CAPM <- RaRb_multiple_portfolio %>%
+  tq_performance(Ra = Ra, Rb = Rb, performance_fun = table.CAPM)
+CAPM
+
+RaRb_multiple_portfolio %>%
+  tq_performance(Ra = Ra, Rb = NULL, performance_fun = VaR)
+Sharpe<-RaRb_multiple_portfolio %>%
+  tq_performance(Ra = Ra, Rb = NULL, performance_fun = SharpeRatio)
+Sharpe
+
+RaRb_multiple_portfolio %>%
+  tq_performance(Ra = Ra, Rb = NULL, performance_fun = table.AnnualizedReturns)
