@@ -29,24 +29,24 @@ bbands.EA <- BBands(EA[,6], sd = 2, n = 20)
 bbands.ATVI <- BBands(ATVI[,6], sd = 2, n = 20)
 bbands.MSFT <- BBands(MSFT[,6], sd = 2, n = 20)
 
-bbands.SNE <- cbind(index(bbands.SNE), data.frame(bbands.SNE), data.frame(SNE[,-5]))
+bbands.SNE <- cbind(index(bbands.SNE), data.frame(bbands.SNE[,4]), data.frame(SNE[,-5]))
 rownames(bbands.SNE) <- seq(1, nrow(bbands.SNE), 1)
-names(bbands.SNE) <- paste(c("date", "dn", "mavg", "up", "pctB", "open","high","low","close","adjusted"))
+names(bbands.SNE) <- paste(c("date", "pctB", "open","high","low","close","adjusted"))
 bbands.SNE <- bbands.SNE[-c(1:20),]
 
-bbands.CMCSA <- cbind(index(bbands.CMCSA), data.frame(bbands.CMCSA), data.frame(CMCSA[,-5]))
+bbands.CMCSA <- cbind(index(bbands.CMCSA), data.frame(bbands.CMCSA[,4]), data.frame(CMCSA[,-5]))
 rownames(bbands.CMCSA) <- seq(1, nrow(bbands.CMCSA), 1)
-names(bbands.CMCSA) <- paste(c("date", "dn", "mavg", "up", "pctB", "open","high","low","close","adjusted"))
+names(bbands.CMCSA) <- paste(c("date", "pctB", "open","high","low","close","adjusted"))
 bbands.CMCSA <- bbands.CMCSA[-c(1:20),]
 
-bbands.FOX <- cbind(index(bbands.FOX), data.frame(bbands.FOX), data.frame(FOX[,-5]))
+bbands.FOX <- cbind(index(bbands.FOX), data.frame(bbands.FOX[,4]), data.frame(FOX[,-5]))
 rownames(bbands.FOX) <- seq(1, nrow(bbands.FOX), 1)
-names(bbands.FOX) <- paste(c("date", "dn", "mavg", "up", "pctB", "open","high","low","close","adjusted"))
+names(bbands.FOX) <- paste(c("date", "pctB", "open","high","low","close","adjusted"))
 bbands.FOX <- bbands.FOX[-c(1:20),]
 
-bbands.DIS <- cbind(index(bbands.DIS), data.frame(bbands.DIS), data.frame(DIS[,-5]))
+bbands.DIS <- cbind(index(bbands.DIS), data.frame(bbands.DIS[,4]), data.frame(DIS[,-5]))
 rownames(bbands.DIS) <- seq(1, nrow(bbands.DIS), 1)
-names(bbands.DIS) <- paste(c("date", "dn", "mavg", "up", "pctB", "open","high","low","close","adjusted"))
+names(bbands.DIS) <- paste(c("date", "pctB", "open","high","low","close","adjusted"))
 bbands.DIS <- bbands.DIS[-c(1:20),]
 
 bbands.TTWO <- cbind(index(bbands.TTWO), data.frame(bbands.TTWO), data.frame(TTWO[,-5]))
@@ -100,25 +100,124 @@ FOX.momentum + labs(title = "Momentum FOX",x = "Ano", y = "Momentum")
 Tb <- tq_get(c("ATVI","EA","MSFT","TTWO"), get = "stock.prices", complete_cases = TRUE, from="2014-01-01", to="2017-01-01")
 
 # Get returns for individual stock components
-Rb <- "^GSPC" %>%
+mReturn <- "^GSPC" %>% 
   tq_get(get  = "stock.prices", from="2014-01-01", to="2017-01-01") %>%
   tq_transmute(adjusted, periodReturn, period = "monthly", col_rename = "Rb")
-
-RaRb <- left_join(pReturn, Rb, by = c("date" = "date"))
-
-retorno <- ggplot(data = RaRb, aes(x = date, y = portfolio.returns)) + geom_line(colour ="darkorchid1")
-retorno <- retorno + geom_line(aes(x = date, y = Rb), colour = "red")
-retorno
 
 monthly_returns_stocks <- Tb %>%
   group_by(symbol) %>%
   tq_transmute(adjusted, periodReturn, period = "monthly")
 
-weights_df <- tibble(symbol = c("ATVI", "EA", "MSFT","TTWO"),
-                     weights = c(0.50, 0.20, 0.10, 0.20))
-pReturn <-tq_portfolio(data = monthly_returns_stocks,
-             assets_col = symbol,
-             returns_col = monthly.returns,
-             weights = weights_df,
-             col_rename = NULL,
-             wealth.index = FALSE)
+weights_df <- tibble(symbol = c("ATVI", "EA", "MSFT","TTWO"), weights = c(0.10, 0.40, 0.25, 0.25))
+pReturn <- tq_portfolio(data = monthly_returns_stocks, assets_col = symbol, returns_col = monthly.returns, weights = weights_df, col_rename = "Ra", wealth.index = FALSE)
+
+RaRb <- left_join(pReturn, mReturn, by = c("date" = "date"))
+retorno <- ggplot(data = RaRb, aes(x = date, y = portfolio.returns)) + geom_line(colour ="darkorchid1")
+retorno <- retorno + geom_line(aes(x = date, y = Rb), colour = "red")
+retorno
+
+Var <- RaRb%>%
+  tq_performance(Ra = Ra, Rb = NULL, performance_fun = VaR)
+
+#multiplos portfolios
+stock_returns_monthly <- c("ATVI", "EA", "MSFT","TTWO") %>%
+  tq_get(get  = "stock.prices",
+         from="2014-01-01", to="2017-01-01") %>%
+  group_by(symbol) %>%
+  tq_transmute(select = adjusted, mutate_fun = periodReturn, period = "monthly", col_rename = "Ra")
+
+baseline_returns_monthly <- "^GSPC" %>%
+  tq_get(get  = "stock.prices",
+         from="2014-01-01", to="2017-01-01") %>%
+  tq_transmute(select     = adjusted, 
+               mutate_fun = periodReturn, 
+               period     = "monthly", 
+               col_rename = "Rb")
+
+stock_returns_monthly_multi <- stock_returns_monthly %>%
+  tq_repeat_df(n = 3)
+stock_returns_monthly_multi
+
+weights <- c(
+  0.20, 0.15, 0.50, 0.15,
+  0.15, 0.15, 0.20, 0.50,
+  0.25, 0.25, 0.25, 0.25
+)
+stocks <- c("ATVI", "EA", "MSFT","TTWO")
+weights_table <-  tibble(stocks) %>%
+  tq_repeat_df(n = 3) %>%
+  bind_cols(tibble(weights)) %>%
+  group_by(portfolio)
+weights_table
+
+portfolio_returns_monthly_multi <- stock_returns_monthly_multi %>%
+  tq_portfolio(assets_col  = symbol, 
+               returns_col = Ra, 
+               weights     = weights_table, 
+               col_rename  = "Ra")
+portfolio_returns_monthly_multi
+
+RaRb_multiple_portfolio <- left_join(portfolio_returns_monthly_multi, 
+                                     baseline_returns_monthly,
+                                     by = "date")
+RaRb_multiple_portfolio
+
+
+CAPM <- RaRb_multiple_portfolio %>%
+  tq_performance(Ra = Ra, Rb = Rb, performance_fun = table.CAPM)
+CAPM
+
+RaRb_multiple_portfolio %>%
+  tq_performance(Ra = Ra, Rb = NULL, performance_fun = VaR)
+Sharpe<-RaRb_multiple_portfolio %>%
+  tq_performance(Ra = Ra, Rb = NULL, performance_fun = SharpeRatio)
+Sharpe
+
+RaRb_multiple_portfolio %>%
+  tq_performance(Ra = Ra, Rb = NULL, performance_fun = table.AnnualizedReturns)
+
+portfolio_growth_monthly_multi <- stock_returns_monthly_multi %>%
+  tq_portfolio(assets_col   = symbol, 
+               returns_col  = Ra, 
+               weights      = weights_table, 
+               col_rename   = "investment.growth",
+               wealth.index = TRUE) %>%
+  mutate(investment.growth = investment.growth)
+portfolio_growth_monthly_multi %>%
+  ggplot(aes(x = date, y = investment.growth, color = factor(portfolio))) +
+  geom_line(size = 2) +
+  labs(title = "Portfolio Growth",
+       subtitle = "Comparing Multiple Portfolios",
+       caption = "Portfolio 3 is a Standout!",
+       x = "", y = "Portfolio Value",
+       color = "Portfolio") +
+  theme_tq() +
+  scale_color_tq() +
+  scale_y_continuous(labels = scales::dollar)
+
+
+### retorno
+wts <- c(0.25, 0.25, 0.25, 0.25)
+portfolio_returns_monthly <- stock_returns_monthly %>%
+  tq_portfolio(assets_col  = symbol, 
+               returns_col = Ra, 
+               weights     = wts, 
+               col_rename  = "Ra")
+
+Rb <- "^GSPC" %>% 
+  tq_get(get  = "stock.prices", from="2014-01-01", to="2017-01-01") %>%
+  tq_transmute(adjusted, periodReturn, period = "monthly", col_rename = "Rb")
+portfolio_returns_monthly <- left_join(portfolio_returns_monthly, Rb, by = c("date" = "date"))
+
+portfolio_returns_monthly %>%
+  ggplot(aes(x = date, y = Ra)) +
+  geom_bar(stat = "identity", fill = palette_light()[[1]], alpha = 0.5) +
+  geom_bar(aes(x = date, y= Rb), stat = "identity", fill = palette_light()[[2]], alpha = 0.5) +
+  labs(title = "Portfolio Returns",
+       subtitle = "25% ATVI, 25% TTWO, 25% EA and 25% MSFT",
+       caption = "Shows an above-zero trend meaning positive returns",
+       x = "", y = "Monthly Returns") +
+  geom_smooth(method = "lm") +
+  theme_tq() +
+  scale_color_tq() +
+  scale_y_continuous(labels = scales::percent)
