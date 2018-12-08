@@ -36,7 +36,7 @@ Esse grande crescimento pode ser comprovado ao se comparar com a gigante indúst
 
 ###Passo 4: Obtenção dos dados (dados das empresas selecionadas) (0.5 pontos)
 Foram selecionadas quatro grandes empresas do setor de produção cinematográfica para o estudo durante um período de 3 anos. A partir da biblioteca *quantmod* podemos usar a função `getSymbols` e carregar as informações direto do *Yahoo Finance*.
-```{r, eval=TRUE, include=FALSE, message=F, warning=F}
+```{r, eval=TRUE, include=FTRU, message=F, warning=F}
 getSymbols("TTWO", from="2014-01-01", to="2017-01-01")
 getSymbols("EA", from="2014-01-01", to="2017-01-01")
 getSymbols("ATVI", from="2014-01-01", to="2017-01-01")
@@ -146,7 +146,7 @@ Depois de todas as análises fundamentalistas chegamos a conclusão que as duas 
 ##Etapa 3 - Análise Técnica (2.5 pontos)
 ###Passo 8: Utilizar as medidas estudadas: MediaMovel, Bollinger Bands, Momentum. (1.5 pontos)
 #### *Bollinger Bands*
-```{r, eval=TRUE}
+```{r, eval=TRUE, warning=F}
 bbands.TTWO <- BBands(TTWO[,6], sd = 2, n = 20)
 bbands.TTWO <- cbind(index(bbands.TTWO), data.frame(bbands.TTWO), data.frame(TTWO[,-5]))
 rownames(bbands.TTWO) <- seq(1, nrow(bbands.TTWO), 1)
@@ -158,15 +158,12 @@ TTWO.bband <- TTWO.bband + geom_bbands(ma_fun = SMA, sd = 2, n = 20, linetype = 
 TTWO.bband <- TTWO.bband + labs(title = "Bollinger Bands TTWO", x = NULL, y = "Valor da Ação")
 TTWO.bband <- TTWO.bband + theme_tq() + theme(axis.title.x=element_blank(), axis.text.x=element_blank(), axis.ticks.x=element_blank())
 TTWO.bband <- TTWO.bband + scale_y_continuous()
-TTWO.pctB <- ggplot(data = bbands.TTWO, aes(date, pctB)) + geom_line(colour ="darkgreen", size = 0.5)
-TTWO.pctB <- TTWO.pctB + labs(x = "Ano", y = "%B")
-TTWO.pctB <- TTWO.pctB + theme_tq()
-grid.arrange(TTWO.bband,TTWO.pctB, nrow = 2, heights=c(2/3, 1/3))
+TTWO.bband
 ```
 
 Ao analisar o gráfico de Bollinger Bands da TTWO podemos verificar apenas um momento onde a ação entrou em oversold significativo (vela ultrapassa a banda inferior), que foi no 3º bimestre de 2015 e um momento em que o ativo entrou em overbought significativo (4º bimestre de 2015). A TTWO possui uma volatilidade extremamente baixa durante todo o período avaliado. A empresa começou o ano de 2014 com um crescimento muito bom,  se manteve em crescimento constante. Embora algumas quedas e variações durante o caminho, o preço ao fechar o ano de 2016 foi maior que duas vezes o preço da ação no iniciar de 2014. 
 
-```{r, eval=TRUE}
+```{r, eval=TRUE, warning=F}
 bbands.EA <- BBands(EA[,6], sd = 2, n = 20)
 bbands.EA <- cbind(index(bbands.EA), data.frame(bbands.EA), data.frame(EA[,-5]))
 rownames(bbands.EA) <- seq(1, nrow(bbands.EA), 1)
@@ -178,15 +175,12 @@ EA.bband <- EA.bband + geom_bbands(ma_fun = SMA, sd = 2, n = 20, linetype = 2, s
 EA.bband <- EA.bband + labs(title = "Bollinger Bands EA", x = NULL, y = "Valor da Ação")
 EA.bband <- EA.bband + theme_tq() + theme(axis.title.x=element_blank(), axis.text.x=element_blank(), axis.ticks.x=element_blank())
 EA.bband <- EA.bband + scale_y_continuous()
-EA.pctB <- ggplot(data = bbands.EA, aes(date, pctB)) + geom_line(colour ="darkgreen", size = 0.5)
-EA.pctB <- EA.pctB + labs(x = "Ano", y = "%B")
-EA.pctB <- EA.pctB + theme_tq()
-grid.arrange(EA.bband,EA.pctB, nrow = 2, heights=c(2/3, 1/3))
+EA.bband
 ```
 
 Ao analisar o gráfico de Bollinger Bands da EA podemos verificar apenas um momento onde a ação entrou em oversold significativo (vela ultrapassa a banda inferior), que foi no 3º bimestre de 2015 e nenhum momento onde o ativo entrou em overbought significativo. A EA possui uma volatilidade extremamente baixa durante todo o período avaliado, mas em dois momentos de 2016 ele se tornou um pouco maior. A empresa começou o ano de 2014 com um crescimento muito bom, e se manteve em crescimento constante. Embora algumas quedas e variações durante o caminho, o preço ao fechar o ano de 2016 foi maior que quatro vezes o preço da ação no iniciar de 2014. 
 
-```{r, eval=TRUE}
+```{r, eval=TRUE, warning=F}
 bbands.ATVI <- BBands(ATVI[,6], sd = 2, n = 20)
 bbands.ATVI <- cbind(index(bbands.ATVI), data.frame(bbands.ATVI), data.frame(ATVI[,-5]))
 rownames(bbands.ATVI) <- seq(1, nrow(bbands.ATVI), 1)
@@ -198,15 +192,12 @@ ATVI.bband <- ATVI.bband + geom_bbands(ma_fun = SMA, sd = 2, n = 20, linetype = 
 ATVI.bband <- ATVI.bband + labs(title = "Bollinger Bands ATVI", x = NULL, y = "Valor da Ação")
 ATVI.bband <- ATVI.bband + theme_tq() + theme(axis.title.x=element_blank(), axis.text.x=element_blank(), axis.ticks.x=element_blank())
 ATVI.bband <- ATVI.bband + scale_y_continuous()
-ATVI.pctB <- ggplot(data = bbands.ATVI, aes(date, pctB)) + geom_line(colour ="darkgreen", size = 0.5)
-ATVI.pctB <- ATVI.pctB + labs(x = "Ano", y = "%B")
-ATVI.pctB <- ATVI.pctB + theme_tq()
-grid.arrange(ATVI.bband,ATVI.pctB, nrow = 2, heights=c(2/3, 1/3))
+ATVI.bband
 ```
 
 Ao analisar o gráfico de Bollinger Bands da ATVI podemos verificar que em nenhum momento onde a ação entrou em oversold ou overbought significativo (vela ultrapassa a banda inferior ou superior). A ATVI possui uma volatilidade extremamente baixa durante todo o período avaliado, mas no 1º bimestre de 2016 ouve um variação das bandas um pouco maior. A empresa começou o ano de 2014 com um crescimento muito bom, e se manteve em crescimento constante. Embora algumas quedas e variações durante o caminho, o preço ao fechar o ano de 2016 foi maior que duas vezes o preço da ação no iniciar de 2014. 
 
-```{r, eval=TRUE}
+```{r, eval=TRUE, warning=F}
 bbands.MSFT <- BBands(MSFT[,6], sd = 2, n = 20)
 bbands.MSFT <- cbind(index(bbands.MSFT), data.frame(bbands.MSFT), data.frame(MSFT[,-5]))
 rownames(bbands.MSFT) <- seq(1, nrow(bbands.MSFT), 1)
@@ -218,38 +209,35 @@ MSFT.bband <- MSFT.bband + geom_bbands(ma_fun = SMA, sd = 2, n = 20, linetype = 
 MSFT.bband <- MSFT.bband + labs(title = "Bollinger Bands MSFT", x = NULL, y = "Valor da Ação")
 MSFT.bband <- MSFT.bband + theme_tq() + theme(axis.title.x=element_blank(), axis.text.x=element_blank(), axis.ticks.x=element_blank())
 MSFT.bband <- MSFT.bband + scale_y_continuous()
-MSFT.pctB <- ggplot(data = bbands.MSFT, aes(date, pctB)) + geom_line(colour ="darkgreen", size = 0.5)
-MSFT.pctB <- MSFT.pctB + labs(x = "Ano", y = "%B")
-MSFT.pctB <- MSFT.pctB + theme_tq()
-grid.arrange(MSFT.bband,MSFT.pctB, nrow = 2, heights=c(2/3, 1/3))
+MSFT.bband
 ```
 
 Ao analisar o gráfico de Bollinger Bands da MSFT podemos verificar que em nenhum momento onde a ação entrou em oversold ou overbought significativo (vela ultrapassa a banda inferior ou superior). A MSFT possui uma volatilidade mediana durante todo o período avaliado, mas durante 2016 as variações do valor e da volatilidade foram muito altas. A empresa começou o ano de 2014 com um crescimento muito bom, e se manteve em crescimento constante. Embora algumas quedas e variações durante o caminho, o preço ao fechar o ano de 2016 foi 30 dólares mais caro que o de iniciar de 2014.
 
 
 #### Média Móvel
-```{r, eval=TRUE}
+```{r, eval=TRUE}, warning=F
 TTWO.mm <- ggplot(data = bbands.TTWO, aes(x = date, y = close)) + geom_candlestick(aes(x = date, open = open, high = high,low = low,close = close), color_up = "gray30", color_down = "gray30", fill_up = "green3", fill_down = "red") + theme_tq()
 TTWO.mm <- TTWO.mm + geom_ma(ma_fun = SMA, n  = 50, na.rm = T, linetype = 1, colour = "Turquoise 1")
 TTWO.mm <- TTWO.mm + geom_ma(ma_fun = SMA, n = 200, na.rm = T, linetype = 1, colour = "darkorchid1")
 TTWO.mm + labs(title = "Média Móvel TTWO", x = "Ano", y = "Valor da Ação")
 ``` 
 
-```{r, eval=TRUE}
+```{r, eval=TRUE}, warning=F
 EA.mm <- ggplot(data = bbands.EA, aes(x = date, y = close)) + geom_candlestick(aes(x = date, open = open, high = high,low = low,close = close), color_up = "gray30", color_down = "gray30", fill_up = "green3", fill_down = "red") + theme_tq()
 EA.mm <- EA.mm + geom_ma(ma_fun = SMA, n  = 50, na.rm = T, linetype = 1, colour = "Turquoise 1")
 EA.mm <- EA.mm + geom_ma(ma_fun = SMA, n = 200, na.rm = T, linetype = 1, colour = "darkorchid1")
 EA.mm + labs(title = "Média Móvel EA", x = "Ano", y = "Valor da Ação")
 ``` 
 
-```{r, eval=TRUE}
+```{r, eval=TRUE}, warning=F
 ATVI.mm <- ggplot(data = bbands.ATVI, aes(x = date, y = close)) + geom_candlestick(aes(x = date, open = open, high = high,low = low,close = close), color_up = "gray30", color_down = "gray30", fill_up = "green3", fill_down = "red") + theme_tq()
 ATVI.mm <- ATVI.mm + geom_ma(ma_fun = SMA, n  = 50, na.rm = T, linetype = 1, colour = "Turquoise 1")
 ATVI.mm <- ATVI.mm + geom_ma(ma_fun = SMA, n = 200, na.rm = T, linetype = 1, colour = "darkorchid1")
 ATVI.mm + labs(title = "Média Móvel ATVI", x = "Ano", y = "Valor da Ação")
 ``` 
 
-```{r, eval=TRUE}
+```{r, eval=TRUE}, warning=F}
 MSFT.mm <- ggplot(data = bbands.MSFT, aes(x = date, y = close)) + geom_candlestick(aes(x = date, open = open, high = high,low = low,close = close), color_up = "gray30", color_down = "gray30", fill_up = "green3", fill_down = "red") + theme_tq()
 MSFT.mm <- MSFT.mm + geom_ma(ma_fun = SMA, n  = 50, na.rm = T, linetype = 1, colour = "Turquoise 1")
 MSFT.mm <- MSFT.mm + geom_ma(ma_fun = SMA, n = 200, na.rm = T, linetype = 1, colour = "darkorchid1")
@@ -257,7 +245,7 @@ MSFT.mm + labs(title = "Média Móvel MSFT", x = "Ano", y = "Valor da Ação")
 ``` 
 
 #### *Momentum*
-```{r, eval=TRUE}
+```{r, eval=TRUE, warning=F
 momentum.TTWO <- RSI(TTWO$TTWO.Close, n = 14)
 momentum.TTWO <- cbind(index(momentum.TTWO), data.frame(momentum.TTWO))
 rownames(bbands.TTWO) <- seq(1, nrow(bbands.TTWO), 1)
@@ -267,7 +255,7 @@ TTWO.momentum <- ggplot(data = momentum.TTWO, aes (x = date, y = Momentum)) + ge
 TTWO.momentum + labs(title = "Momentum TTWO",x = "Ano", y = "Momentum")
 ``` 
 
-```{r, eval=TRUE}
+```{r, eval=TRUE}, warning=F
 momentum.EA <- RSI(EA$EA.Close, n = 14)
 momentum.EA <- cbind(index(momentum.EA), data.frame(momentum.EA))
 rownames(bbands.EA) <- seq(1, nrow(bbands.EA), 1)
@@ -277,7 +265,7 @@ EA.momentum <- ggplot(data = momentum.EA, aes (x = date, y = Momentum)) + geom_l
 EA.momentum + labs(title = "Momentum EA",x = "Ano", y = "Momentum")
 ```  
 
-```{r, eval=TRUE}
+```{r, eval=TRUE}, warning=F
 momentum.ATVI <- RSI(ATVI$ATVI.Close, n = 14)
 momentum.ATVI <- cbind(index(momentum.ATVI), data.frame(momentum.ATVI))
 rownames(bbands.ATVI) <- seq(1, nrow(bbands.ATVI), 1)
@@ -287,7 +275,7 @@ ATVI.momentum <- ggplot(data = momentum.ATVI, aes (x = date, y = Momentum)) + ge
 ATVI.momentum + labs(title = "Momentum ATVI",x = "Ano", y = "Momentum")
 ``` 
 
-```{r, eval=TRUE}
+```{r, eval=TRUE}, warning=F
 momentum.MSFT <- RSI(MSFT$MSFT.Close, n = 14)
 momentum.MSFT <- cbind(index(momentum.MSFT), data.frame(momentum.MSFT))
 rownames(bbands.MSFT) <- seq(1, nrow(bbands.MSFT), 1)

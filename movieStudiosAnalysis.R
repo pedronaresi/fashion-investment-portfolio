@@ -212,10 +212,13 @@ portfolio_returns_monthly %>%
 
 CAPM <- RaRb_multiple_portfolio %>%
   tq_performance(Ra = Ra, Rb = Rb, performance_fun = table.CAPM)
-CAPM
+CAPM$Beta[1]
+CAPM$Alpha[1]*100
 
-RaRb_multiple_portfolio %>%
+VaR <- RaRb_multiple_portfolio %>%
   tq_performance(Ra = Ra, Rb = NULL, performance_fun = VaR)
+VaR[2]
+
 Sharpe<-RaRb_multiple_portfolio %>%
   tq_performance(Ra = Ra, Rb = NULL, performance_fun = SharpeRatio)
 Sharpe

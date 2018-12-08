@@ -37,7 +37,7 @@ Os números, além de incríveis ao olhos dos leigos, são ainda mais incrível 
 
 ###Passo 4: Obtenção dos dados (dados das empresas selecionadas) (0.5 pontos)
 Foram selecionadas quatro grandes empresas do setor de produção cinematográfica para o estudo durante um período de 3 anos. A partir da biblioteca *quantmod* podemos usar a função `getSymbols` e carregar as informações direto do *Yahoo Finance*.
-```{r, eval=TRUE, include=FALSE, message=F, warning=F}
+```{r, eval=TRUE, include=TRUE, message=F, warning=F}
 getSymbols("SNE", from="2014-01-01", to="2017-01-01")
 getSymbols("CMCSA", from="2014-01-01", to="2017-01-01")
 getSymbols("FOX", from="2014-01-01", to="2017-01-01")
@@ -148,7 +148,7 @@ Depois de todas as análises fundamentalistas chegamos a conclusão que as duas 
 
 ###Passo 8: Utilizar as medidas estudadas: Média Móvel, Bollinger Bands, Momentum. (1.5 pontos)
 #### *Bollinger Bands*
-```{r, eval=TRUE}
+```{r, eval=TRUE, warning=F}
 bbands.DIS <- BBands(DIS[,6], sd = 2, n = 20)
 bbands.DIS <- cbind(index(bbands.DIS), data.frame(bbands.DIS), data.frame(DIS[,-5]))
 rownames(bbands.DIS) <- seq(1, nrow(bbands.DIS), 1)
@@ -160,15 +160,12 @@ DIS.bband <- DIS.bband + geom_bbands(ma_fun = SMA, sd = 2, n = 20, linetype = 2,
 DIS.bband <- DIS.bband + labs(title = "Bollinger Bands DIS", x = NULL, y = "Valor da Ação")
 DIS.bband <- DIS.bband + theme_tq() + theme(axis.title.x=element_blank(), axis.text.x=element_blank(), axis.ticks.x=element_blank())
 DIS.bband <- DIS.bband + scale_y_continuous()
-DIS.pctB <- ggplot(data = bbands.DIS, aes(date, pctB)) + geom_line(colour ="darkgreen", size = 0.5)
-DIS.pctB <- DIS.pctB + labs(x = "Ano", y = "%B")
-DIS.pctB <- DIS.pctB + theme_tq()
-grid.arrange(DIS.bband,DIS.pctB, nrow = 2, heights=c(2/3, 1/3))
+DIS.bband
 ```
 
 Ao analisar o gráfico de Bollinger Bands da DIS podemos de cara encontrar três momentos onde o ativo entrou em oversold (vela ultrapassa a banda inferior), que foram datas em 2014, 2015 e 2016 (uma média de uma vez por ano). Em nenhum momento o ativo entrou em um overbought significativo. Em relação a volatilidade: o ativo se comprou pouco volátil, entretanto, em alguns momento, principalmente em 2016, a distância entre as bandas aumentou muito e logo em seguida o ativo entrou em oversold.
 
-```{r, eval=TRUE}
+```{r, eval=TRUE, warning=F}
 bbands.SNE <- BBands(SNE[,6], sd = 2, n = 20)
 bbands.SNE <- cbind(index(bbands.SNE), data.frame(bbands.SNE), data.frame(SNE[,-5]))
 rownames(bbands.SNE) <- seq(1, nrow(bbands.SNE), 1)
@@ -180,15 +177,12 @@ SNE.bband <- SNE.bband + geom_bbands(ma_fun = SMA, sd = 2, n = 20, linetype = 2,
 SNE.bband <- SNE.bband + labs(title = "Bollinger Bands SNE", x = NULL, y = "Valor da Ação")
 SNE.bband <- SNE.bband + theme_tq() + theme(axis.title.x=element_blank(), axis.text.x=element_blank(), axis.ticks.x=element_blank())
 SNE.bband <- SNE.bband + scale_y_continuous()
-SNE.pctB <- ggplot(data = bbands.SNE, aes(date, pctB)) + geom_line(colour ="darkgreen", size = 0.5)
-SNE.pctB <- SNE.pctB + labs(x = "Ano", y = "%B")
-SNE.pctB <- SNE.pctB + theme_tq()
-grid.arrange(SNE.bband,SNE.pctB, nrow = 2, heights=c(2/3, 1/3))
+SNE.bband
 ```
 
 Ao analisar o gráfico de Bollinger Bands da SNE podemos de cara encontrar um momento onde o ativo entrou em oversold significativo (vela ultrapassa a banda inferior), que foi no segundo semestre de 2016. Em nenhum momento o ativo entrou em um overbought significativo. Em relação a volatilidade: o ativo se comportou pouco volátil (menos volátil  que a DIS), entretanto, momentos antes do oversold de 2016, a volatilidade atingiu um valor muito alto.
 
-```{r, eval=TRUE}
+```{r, eval=TRUE, warning=F}
 bbands.FOX <- BBands(FOX[,6], sd = 2, n = 20)
 bbands.FOX <- cbind(index(bbands.FOX), data.frame(bbands.FOX), data.frame(FOX[,-5]))
 rownames(bbands.FOX) <- seq(1, nrow(bbands.FOX), 1)
@@ -200,15 +194,12 @@ FOX.bband <- FOX.bband + geom_bbands(ma_fun = SMA, sd = 2, n = 20, linetype = 2,
 FOX.bband <- FOX.bband + labs(title = "Bollinger Bands FOX", x = NULL, y = "Valor da Ação")
 FOX.bband <- FOX.bband + theme_tq() + theme(axis.title.x=element_blank(), axis.text.x=element_blank(), axis.ticks.x=element_blank())
 FOX.bband <- FOX.bband + scale_y_continuous()
-FOX.pctB <- ggplot(data = bbands.FOX, aes(date, pctB)) + geom_line(colour ="darkgreen", size = 0.5)
-FOX.pctB <- FOX.pctB + labs(x = "Ano", y = "%B")
-FOX.pctB <- FOX.pctB + theme_tq()
-grid.arrange(FOX.bband,FOX.pctB, nrow = 2, heights=c(2/3, 1/3))
+FOX.bband
 ```
 
 Ao analisar o gráfico de Bollinger Bands da FOX podemos verificar três momentos onde o ativo entrou em oversold significativo (vela ultrapassa a banda inferior), que foi duas vezes em 2015 e uma em 2016.  Em nenhum momento o ativo entrou em um overbought significativo. A FOX começou o ano de 2014 com um crescimento muito bom, entretanto, ao começar 2015, os valores começaram a cair e a volatilidade aumentar,. Foi então que no 3º bimestre de novembro houve uma queda muito drástica no valor da ação, que chegou algo em torno da metade do valor em que a FOX começou o ano de 2015. 
 
-```{r, eval=TRUE}
+```{r, eval=TRUE, warning=F}
 bbands.CMCSA <- BBands(CMCSA[,6], sd = 2, n = 20)
 bbands.CMCSA <- cbind(index(bbands.CMCSA), data.frame(bbands.CMCSA), data.frame(CMCSA[,-5]))
 rownames(bbands.CMCSA) <- seq(1, nrow(bbands.CMCSA), 1)
@@ -220,37 +211,34 @@ CMCSA.bband <- CMCSA.bband + geom_bbands(ma_fun = SMA, sd = 2, n = 20, linetype 
 CMCSA.bband <- CMCSA.bband + labs(title = "Bollinger Bands CMCSA", x = NULL, y = "Valor da Ação")
 CMCSA.bband <- CMCSA.bband + theme_tq() + theme(axis.title.x=element_blank(), axis.text.x=element_blank(), axis.ticks.x=element_blank())
 CMCSA.bband <- CMCSA.bband + scale_y_continuous()
-CMCSA.pctB <- ggplot(data = bbands.CMCSA, aes(date, pctB)) + geom_line(colour ="darkgreen", size = 0.5)
-CMCSA.pctB <- CMCSA.pctB + labs(x = "Ano", y = "%B")
-CMCSA.pctB <- CMCSA.pctB + theme_tq()
-grid.arrange(CMCSA.bband,CMCSA.pctB, nrow = 2, heights=c(2/3, 1/3))
+CMCSA.bband
 ```
 
 Ao analisar o gráfico de Bollinger Bands da CMCSA podemos verificar apenas um momento onde a ação entrou em oversold significativo (vela ultrapassa a banda inferior), que foi no 3º bimestre de 2015. Em nenhum momento o ativo entrou em um overbought significativo. A CMCSA começou o ano de 2014 com um crescimento muito bom,  se manter em crescimento constante. Embora algumas quedas e variações durante o caminho, a volatilidade se mostrou baixa e o ativo em três anos passou a valer um terço a mais do valor inicial da amostra. 
 
 #### Média Móvel
-```{r, eval=TRUE}
+```{r, eval=TRUE, warning=F}
 DIS.mm <- ggplot(data = bbands.DIS, aes(x = date, y = close)) + geom_candlestick(aes(x = date, open = open, high = high,low = low,close = close), color_up = "gray30", color_down = "gray30", fill_up = "green3", fill_down = "red") + theme_tq()
 DIS.mm <- DIS.mm + geom_ma(ma_fun = SMA, n  = 50, na.rm = T, linetype = 1, colour = "Turquoise 1")
 DIS.mm <- DIS.mm + geom_ma(ma_fun = SMA, n = 200, na.rm = T, linetype = 1, colour = "darkorchid1")
 DIS.mm + labs(title = "Média Móvel DIS", x = "Ano", y = "Valor da Ação")
 ``` 
 
-```{r, eval=TRUE}
+```{r, eval=TRUE, warning=F}
 SNE.mm <- ggplot(data = bbands.SNE, aes(x = date, y = close)) + geom_candlestick(aes(x = date, open = open, high = high,low = low,close = close), color_up = "gray30", color_down = "gray30", fill_up = "green3", fill_down = "red") + theme_tq()
 SNE.mm <- SNE.mm + geom_ma(ma_fun = SMA, n  = 50, na.rm = T, linetype = 1, colour = "Turquoise 1")
 SNE.mm <- SNE.mm + geom_ma(ma_fun = SMA, n = 200, na.rm = T, linetype = 1, colour = "darkorchid1")
 SNE.mm + labs(title = "Média Móvel SNE", x = "Ano", y = "Valor da Ação")
 ``` 
 
-```{r, eval=TRUE}
+```{r, eval=TRUE, warning=F}
 FOX.mm <- ggplot(data = bbands.FOX, aes(x = date, y = close)) + geom_candlestick(aes(x = date, open = open, high = high,low = low,close = close), color_up = "gray30", color_down = "gray30", fill_up = "green3", fill_down = "red") + theme_tq()
 FOX.mm <- FOX.mm + geom_ma(ma_fun = SMA, n  = 50, na.rm = T, linetype = 1, colour = "Turquoise 1")
 FOX.mm <- FOX.mm + geom_ma(ma_fun = SMA, n = 200, na.rm = T, linetype = 1, colour = "darkorchid1")
 FOX.mm + labs(title = "Média Móvel FOX", x = "Ano", y = "Valor da Ação")
 ``` 
 
-```{r, eval=TRUE}
+```{r, eval=TRUE, warning=F}
 CMCSA.mm <- ggplot(data = bbands.CMCSA, aes(x = date, y = close)) + geom_candlestick(aes(x = date, open = open, high = high,low = low,close = close), color_up = "gray30", color_down = "gray30", fill_up = "green3", fill_down = "red") + theme_tq()
 CMCSA.mm <- CMCSA.mm + geom_ma(ma_fun = SMA, n  = 50, na.rm = T, linetype = 1, colour = "Turquoise 1")
 CMCSA.mm <- CMCSA.mm + geom_ma(ma_fun = SMA, n = 200, na.rm = T, linetype = 1, colour = "darkorchid1")
@@ -258,7 +246,7 @@ CMCSA.mm + labs(title = "Média Móvel CMCSA", x = "Ano", y = "Valor da Ação")
 ``` 
 
 #### *Momentum*
-```{r, eval=TRUE}
+```{r, eval=TRUE, warning=F}
 momentum.DIS <- RSI(DIS$DIS.Close, n = 14)
 momentum.DIS <- cbind(index(momentum.DIS), data.frame(momentum.DIS))
 rownames(bbands.DIS) <- seq(1, nrow(bbands.DIS), 1)
@@ -268,7 +256,7 @@ DIS.momentum <- ggplot(data = momentum.DIS, aes (x = date, y = Momentum)) + geom
 DIS.momentum + labs(title = "Momentum DIS",x = "Ano", y = "Momentum")
 ``` 
 
-```{r, eval=TRUE}
+```{r, eval=TRUE, warning=F}
 momentum.SNE <- RSI(SNE$SNE.Close, n = 14)
 momentum.SNE <- cbind(index(momentum.SNE), data.frame(momentum.SNE))
 rownames(bbands.SNE) <- seq(1, nrow(bbands.SNE), 1)
@@ -278,7 +266,7 @@ SNE.momentum <- ggplot(data = momentum.SNE, aes (x = date, y = Momentum)) + geom
 SNE.momentum + labs(title = "Momentum SNE",x = "Ano", y = "Momentum")
 ```  
 
-```{r, eval=TRUE}
+```{r, eval=TRUE, warning=F}
 momentum.FOX <- RSI(FOX$FOX.Close, n = 14)
 momentum.FOX <- cbind(index(momentum.FOX), data.frame(momentum.FOX))
 rownames(bbands.FOX) <- seq(1, nrow(bbands.FOX), 1)
@@ -288,7 +276,7 @@ FOX.momentum <- ggplot(data = momentum.FOX, aes (x = date, y = Momentum)) + geom
 FOX.momentum + labs(title = "Momentum FOX",x = "Ano", y = "Momentum")
 ``` 
 
-```{r, eval=TRUE}
+```{r, eval=TRUE, warning=F}
 momentum.CMCSA <- RSI(CMCSA$CMCSA.Close, n = 14)
 momentum.CMCSA <- cbind(index(momentum.CMCSA), data.frame(momentum.CMCSA))
 rownames(bbands.CMCSA) <- seq(1, nrow(bbands.CMCSA), 1)
